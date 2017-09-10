@@ -15,10 +15,10 @@ const shell = require('shelljs');
 const japanese = require('japanese');
 console.log('Connecting...');
 process.on('unhandledRejection', (reason) => {
-    return console.log('Reason: ' + reason);
+    return;
 });
 process.on('uncaughtException', err => {
-    return console.log('Error: ' + err);
+    return;
 });
 
 bot.on("ready", () => { 
@@ -323,7 +323,7 @@ ${res.text}
                 bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_kr: ${res.text}`
+                description: `:flag_kr: ${res.text}`
             }
         })
             }).catch(err => {
@@ -341,7 +341,7 @@ ${res.text}
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_sa: ${res.text}`
+                description: `:flag_sa: ${res.text}`
             }
         });
     }).catch(err => {
@@ -359,7 +359,7 @@ if (args.startsWith("afrikaans")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_za: ${res.text}`
+                description: `:flag_za: ${res.text}`
             }
         });
     }).catch(err => {
@@ -377,7 +377,7 @@ if (args.startsWith("albanian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_al: ${res.text}`
+                description: `:flag_al: ${res.text}`
             }
         });
     }).catch(err => {
@@ -395,7 +395,7 @@ if (args.startsWith("armenian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_am: ${res.text}`
+                description: `:flag_am: ${res.text}`
             }
         });
     }).catch(err => {
@@ -413,7 +413,7 @@ if (args.startsWith("azerbaijani")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_az: ${res.text}`
+                description: `:flag_az: ${res.text}`
             }
         });
     }).catch(err => {
@@ -431,7 +431,7 @@ if (args.startsWith("basque")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_fr: ${res.text}`
+                description: `:flag_fr: ${res.text}`
             }
         });
     }).catch(err => {
@@ -449,7 +449,7 @@ if (args.startsWith("belarusian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_by: ${res.text}`
+                description: `:flag_by: ${res.text}`
             }
         });
     }).catch(err => {
@@ -467,7 +467,7 @@ if (args.startsWith("bengali")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_bd: ${res.text}`
+                description: `:flag_bd: ${res.text}`
             }
         });
     }).catch(err => {
@@ -485,7 +485,7 @@ if (args.startsWith("bosnian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ba: ${res.text}`
+                description: `:flag_ba: ${res.text}`
             }
         });
     }).catch(err => {
@@ -503,7 +503,7 @@ if (args.startsWith("bulgarian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_bg: ${res.text}`
+                description: `:flag_bg: ${res.text}`
             }
         });
     }).catch(err => {
@@ -521,7 +521,7 @@ if (args.startsWith("catalan")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ad: ${res.text}`
+                description: `:flag_ad: ${res.text}`
             }
         });
     }).catch(err => {
@@ -539,7 +539,7 @@ if (args.startsWith("cebuano")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ph: ${res.text}`
+                description: `:flag_ph: ${res.text}`
             }
         });
     }).catch(err => {
@@ -557,7 +557,7 @@ if (args.startsWith("chichewa")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_zw: ${res.text}`
+                description: `:flag_zw: ${res.text}`
             }
         });
     }).catch(err => {
@@ -575,7 +575,7 @@ if (args.startsWith("chinese-simplified")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_cn: ${res.text}`
+                description: `:flag_cn: ${res.text}`
             }
         });
     }).catch(err => {
@@ -593,7 +593,7 @@ if (args.startsWith("chinese-traditional")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_cn: ${res.text}`
+                description: `:flag_cn: ${res.text}`
             }
         });
     }).catch(err => {
@@ -611,7 +611,7 @@ if (args.startsWith("corsican")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_it: ${res.text}`
+                description: `:flag_it: ${res.text}`
             }
         });
     }).catch(err => {
@@ -629,7 +629,7 @@ if (args.startsWith("croatian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_hr: ${res.text}`
+                description: `:flag_hr: ${res.text}`
             }
         });
     }).catch(err => {
@@ -647,7 +647,7 @@ if (args.startsWith("czech")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_cz: ${res.text}`
+                description: `:flag_cz: ${res.text}`
             }
         });
     }).catch(err => {
@@ -665,7 +665,7 @@ if (args.startsWith("danish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_dk: ${res.text}`
+                description: `:flag_dk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -683,7 +683,7 @@ if (args.startsWith("dutch")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_nl: ${res.text}`
+                description: `:flag_nl: ${res.text}`
             }
         });
     }).catch(err => {
@@ -701,7 +701,7 @@ if (args.startsWith("english")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_um: ${res.text}`
+                description: `:flag_um: ${res.text}`
             }
         });
     }).catch(err => {
@@ -719,7 +719,7 @@ if (args.startsWith("esperanto")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_hu: ${res.text}`
+                description: `:flag_hu: ${res.text}`
             }
         });
     }).catch(err => {
@@ -737,7 +737,7 @@ if (args.startsWith("estonian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ee: ${res.text}`
+                description: `:flag_ee: ${res.text}`
             }
         });
     }).catch(err => {
@@ -755,7 +755,7 @@ if (args.startsWith("filipino")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ph: ${res.text}`
+                description: `:flag_ph: ${res.text}`
             }
         });
     }).catch(err => {
@@ -773,7 +773,7 @@ if (args.startsWith("finnish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_fi: ${res.text}`
+                description: `:flag_fi: ${res.text}`
             }
         });
     }).catch(err => {
@@ -791,7 +791,7 @@ if (args.startsWith("french")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_fr: ${res.text}`
+                description: `:flag_fr: ${res.text}`
             }
         });
     }).catch(err => {
@@ -809,7 +809,7 @@ if (args.startsWith("frisian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_nl: ${res.text}`
+                description: `:flag_nl: ${res.text}`
             }
         });
     }).catch(err => {
@@ -827,7 +827,7 @@ if (args.startsWith("galician")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ea: ${res.text}`
+                description: `:flag_ea: ${res.text}`
             }
         });
     }).catch(err => {
@@ -845,7 +845,7 @@ if (args.startsWith("georgian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ge: ${res.text}`
+                description: `:flag_ge: ${res.text}`
             }
         });
     }).catch(err => {
@@ -863,7 +863,7 @@ if (args.startsWith("german")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_de: ${res.text}`
+                description: `:flag_de: ${res.text}`
             }
         });
     }).catch(err => {
@@ -881,7 +881,7 @@ if (args.startsWith("greek")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_gr: ${res.text}`
+                description: `:flag_gr: ${res.text}`
             }
         });
     }).catch(err => {
@@ -899,7 +899,7 @@ if (args.startsWith("gujarati")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -917,7 +917,7 @@ if (args.startsWith("haitian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ht: ${res.text}`
+                description: `:flag_ht: ${res.text}`
             }
         });
     }).catch(err => {
@@ -935,7 +935,7 @@ if (args.startsWith("hausa")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ne: ${res.text}`
+                description: `:flag_ne: ${res.text}`
             }
         });
     }).catch(err => {
@@ -953,7 +953,7 @@ if (args.startsWith("hawaiian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_um: ${res.text}`
+                description: `:flag_um: ${res.text}`
             }
         });
     }).catch(err => {
@@ -971,7 +971,7 @@ if (args.startsWith("hebrew")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_il: ${res.text}`
+                description: `:flag_il: ${res.text}`
             }
         });
     }).catch(err => {
@@ -989,7 +989,7 @@ if (args.startsWith("hindi")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1007,7 +1007,7 @@ if (args.startsWith("hmong")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_cn: ${res.text}`
+                description: `:flag_cn: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1025,7 +1025,7 @@ if (args.startsWith("hungarian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_hu: ${res.text}`
+                description: `:flag_hu: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1043,7 +1043,7 @@ if (args.startsWith("icelandic")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_is: ${res.text}`
+                description: `:flag_is: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1061,7 +1061,7 @@ if (args.startsWith("igbo")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ng: ${res.text}`
+                description: `:flag_ng: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1079,7 +1079,7 @@ if (args.startsWith("indonesian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_id: ${res.text}`
+                description: `:flag_id: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1097,7 +1097,7 @@ if (args.startsWith("irish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ie: ${res.text}`
+                description: `:flag_ie: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1115,7 +1115,7 @@ if (args.startsWith("italian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_it: ${res.text}`
+                description: `:flag_it: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1133,7 +1133,7 @@ if (args.startsWith("japanese")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_jp: ${res.text}`
+                description: `:flag_jp: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1151,7 +1151,7 @@ if (args.startsWith("javanese")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_id: ${res.text}`
+                description: `:flag_id: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1169,7 +1169,7 @@ if (args.startsWith("kannada")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1187,7 +1187,7 @@ if (args.startsWith("kazakh")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_kz: ${res.text}`
+                description: `:flag_kz: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1205,7 +1205,7 @@ if (args.startsWith("khmer")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_kh: ${res.text}`
+                description: `:flag_kh: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1223,7 +1223,7 @@ if (args.startsWith("kurdish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_tr: ${res.text}`
+                description: `:flag_tr: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1241,7 +1241,7 @@ if (args.startsWith("kyrgyz")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_cn: ${res.text}`
+                description: `:flag_cn: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1259,7 +1259,7 @@ if (args.startsWith("lao")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_la: ${res.text}`
+                description: `:flag_la: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1277,7 +1277,7 @@ if (args.startsWith("latin")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_va: ${res.text}`
+                description: `:flag_va: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1295,7 +1295,7 @@ if (args.startsWith("latvian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_lv: ${res.text}`
+                description: `:flag_lv: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1313,7 +1313,7 @@ if (args.startsWith("lithuanian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_lt: ${res.text}`
+                description: `:flag_lt: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1331,7 +1331,7 @@ if (args.startsWith("luxembourgish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_lu: ${res.text}`
+                description: `:flag_lu: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1349,7 +1349,7 @@ if (args.startsWith("macedonian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_mk: ${res.text}`
+                description: `:flag_mk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1367,7 +1367,7 @@ if (args.startsWith("malagasy")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_mg: ${res.text}`
+                description: `:flag_mg: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1385,7 +1385,7 @@ if (args.startsWith("malay ")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_id: ${res.text}`
+                description: `:flag_id: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1403,7 +1403,7 @@ if (args.startsWith("malayalam")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1421,7 +1421,7 @@ if (args.startsWith("maltese")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_mt: ${res.text}`
+                description: `:flag_mt: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1439,7 +1439,7 @@ if (args.startsWith("maori")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_nz: ${res.text}`
+                description: `:flag_nz: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1457,7 +1457,7 @@ if (args.startsWith("marathi")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1475,7 +1475,7 @@ if (args.startsWith("mongolian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_mn: ${res.text}`
+                description: `:flag_mn: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1493,7 +1493,7 @@ if (args.startsWith("myanmar")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_mm: ${res.text}`
+                description: `:flag_mm: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1511,7 +1511,7 @@ if (args.startsWith("nepali")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_np: ${res.text}`
+                description: `:flag_np: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1529,7 +1529,7 @@ if (args.startsWith("norwegian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_no: ${res.text}`
+                description: `:flag_no: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1547,7 +1547,7 @@ if (args.startsWith("pashto")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_af: ${res.text}`
+                description: `:flag_af: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1565,7 +1565,7 @@ if (args.startsWith("persian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ir: ${res.text}`
+                description: `:flag_ir: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1583,7 +1583,7 @@ if (args.startsWith("polish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_pl: ${res.text}`
+                description: `:flag_pl: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1601,7 +1601,7 @@ if (args.startsWith("portuguese")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_br: ${res.text}`
+                description: `:flag_br: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1619,7 +1619,7 @@ if (args.startsWith("punjabi")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_pk: ${res.text}`
+                description: `:flag_pk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1637,7 +1637,7 @@ if (args.startsWith("romanian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ro: ${res.text}`
+                description: `:flag_ro: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1655,7 +1655,7 @@ if (args.startsWith("russian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ru: ${res.text}`
+                description: `:flag_ru: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1673,7 +1673,7 @@ if (args.startsWith("samoan")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ws: ${res.text}`
+                description: `:flag_ws: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1691,7 +1691,7 @@ if (args.startsWith("scotsGaelic")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_gb: ${res.text}`
+                description: `:flag_gb: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1709,7 +1709,7 @@ if (args.startsWith("serbian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_rs: ${res.text}`
+                description: `:flag_rs: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1727,7 +1727,7 @@ if (args.startsWith("sesotho")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ls: ${res.text}`
+                description: `:flag_ls: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1745,7 +1745,7 @@ if (args.startsWith("shona")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_zw: ${res.text}`
+                description: `:flag_zw: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1763,7 +1763,7 @@ if (args.startsWith("sindhi")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_pk: ${res.text}`
+                description: `:flag_pk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1781,7 +1781,7 @@ if (args.startsWith("sinhala")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_lk: ${res.text}`
+                description: `:flag_lk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1799,7 +1799,7 @@ if (args.startsWith("slovak")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_sk: ${res.text}`
+                description: `:flag_sk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1817,7 +1817,7 @@ if (args.startsWith("slovenian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_si: ${res.text}`
+                description: `:flag_si: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1835,7 +1835,7 @@ if (args.startsWith("somali")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_so: ${res.text}`
+                description: `:flag_so: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1853,7 +1853,7 @@ if (args.startsWith("spanish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_es: ${res.text}`
+                description: `:flag_es: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1871,7 +1871,7 @@ if (args.startsWith("sudanese")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_sd: ${res.text}`
+                description: `:flag_sd: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1889,7 +1889,7 @@ if (args.startsWith("swahili")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ke: ${res.text}`
+                description: `:flag_ke: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1907,7 +1907,7 @@ if (args.startsWith("swedish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_se: ${res.text}`
+                description: `:flag_se: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1925,7 +1925,7 @@ if (args.startsWith("tajik")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_af: ${res.text}`
+                description: `:flag_af: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1943,7 +1943,7 @@ if (args.startsWith("tamil")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1961,7 +1961,7 @@ if (args.startsWith("telugu")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_in: ${res.text}`
+                description: `:flag_in: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1979,7 +1979,7 @@ if (args.startsWith("thai")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_th: ${res.text}`
+                description: `:flag_th: ${res.text}`
             }
         });
     }).catch(err => {
@@ -1997,7 +1997,7 @@ if (args.startsWith("turkish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_tr: ${res.text}`
+                description: `:flag_tr: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2015,7 +2015,7 @@ if (args.startsWith("ukrainian")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ua: ${res.text}`
+                description: `:flag_ua: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2033,7 +2033,7 @@ if (args.startsWith("urdu")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_pk: ${res.text}`
+                description: `:flag_pk: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2051,7 +2051,7 @@ if (args.startsWith("uzbek")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_uz: ${res.text}`
+                description: `:flag_uz: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2069,7 +2069,7 @@ if (args.startsWith("vietnamese")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_vn: ${res.text}`
+                description: `:flag_vn: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2087,7 +2087,7 @@ if (args.startsWith("welsh")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_gb: ${res.text}`
+                description: `:flag_gb: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2105,7 +2105,7 @@ if (args.startsWith("xhosa")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_za: ${res.text}`
+                description: `:flag_za: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2123,7 +2123,7 @@ if (args.startsWith("yiddish")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_il: ${res.text}`
+                description: `:flag_il: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2141,7 +2141,7 @@ if (args.startsWith("yoruba")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_ng: ${res.text}`
+                description: `:flag_ng: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2159,7 +2159,7 @@ if (args.startsWith("zulu")) {
         bot.createMessage(msg.channel.id, {
             embed: {
                 color: 0xFFFFFF,
-                title: `:flag_za: ${res.text}`
+                description: `:flag_za: ${res.text}`
             }
         });
     }).catch(err => {
@@ -2237,7 +2237,7 @@ if (args.startsWith("romanized-korean")) {
     bot.createMessage(msg.channel.id, {
         embed: {
             color: 0xFFFFFF,
-            title: `:flag_kr: ${res.text}`
+            description: `:flag_kr: ${res.text}`
         }
     });
 }
@@ -2250,7 +2250,7 @@ if (args.startsWith("hangulified-korean")) {
     bot.createMessage(msg.channel.id, {
         embed: {
             color: 0xFFFFFF,
-            title: `:flag_kr: ${res.text}`
+            description: `:flag_kr: ${res.text}`
         }
     });
 }
@@ -2263,7 +2263,7 @@ if (args.startsWith("romanized-japanese")) {
     bot.createMessage(msg.channel.id, {
         embed: {
             color: 0xFFFFFF,
-            title: `:flag_jp: ${res.text}`
+            description: `:flag_jp: ${res.text}`
         }
     });
 }
@@ -2276,7 +2276,7 @@ if (args.startsWith("katakanized-japanese")) {
     bot.createMessage(msg.channel.id, {
         embed: {
             color: 0xFFFFFF,
-            title: `:flag_jp: ${res.text}`
+            description: `:flag_jp: ${res.text}`
         }
     });
 }
@@ -2289,7 +2289,7 @@ if (args.startsWith("hiraganized-japanese")) {
     bot.createMessage(msg.channel.id, {
         embed: {
             color: 0xFFFFFF,
-            title: `:flag_jp: ${res.text}`
+            description: `:flag_jp: ${res.text}`
         }
     });
 } //Command End
@@ -2359,17 +2359,20 @@ ${shardMap}
 
 if (msg.content.toLowerCase() === ":t guild list") {
         if (msg.author.id !== "205912295837138944") return;
-        let translateGuilds = bot.guilds.map(g => `NAME: ${g.name} | MEMBER ACOUNT: ${g.memberCount} | GUILD ID: ${g.id} | OWNER ID: ${g.ownerID} | LARGE GUILD: ${g.large}`).join("\n");
+        let translateGuilds = bot.guilds.map(g => `"${g.name}": { 
+    "MEMBER ACOUNT": "${g.memberCount}",
+    "GUILD ID": "${g.id}",
+    "OWNER ID": "${g.ownerID}",
+    "LARGE GUILD": "${g.large}",
+    "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}"
+},`).join("\n");
         var writeFile = require('write');
-        writeFile(`${msg.id}${bot.uptime}GUILDINFO.txt`, `${translateGuilds}`, function(err) {
+        writeFile(`${msg.id}${bot.uptime}GUILDINFO.json`, `${translateGuilds}`, function(err) {
             if (err) {
                 console.log(err);
                 bot.createMessage(msg.channel.id, 'Error while processing guild information.');
             } else {
                 bot.createMessage(msg.channel.id, `Guild Info file made! Reporting info on ${bot.guilds.size} guilds!`);
-                setTimeout(() => {
-                bot.createMessage(msg.channel.id, {file: buffer, name: `./${msg.id}${bot.uptime}GUILDINFO.txt`});
-                }, 6000);
             }
         });
     }
@@ -2483,7 +2486,7 @@ if (msg.content.toLowerCase() === ":t ping") {
         let botPing = Math.floor(msg.channel.guild.shard.latency);
             bot.createMessage(msg.channel.id, {embed: {
                 color:0xFFFFFF,
-                title: `:satellite_orbital: ${botPing}`
+                title: `:satellite_orbital: ${botPing}ms`
             }
         })
     }
