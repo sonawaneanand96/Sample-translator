@@ -227,6 +227,8 @@ ${shardMap}
     }});
   }
   var thingToTranslate = args.join(" ").split(" ").slice(1).join(" ").toString();
+  
+  if(args[0] != null || args[0] != undefined || args[0] != "")
   switch(args[0].toLowerCase()){
     default: return msg.channel.createMessage("That's not a valid language.");
     case "korean": return translateFunction(args[0].toLowerCase().substring(0, 2), thingToTranslate, ':flag_kr:');
