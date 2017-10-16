@@ -1,7 +1,7 @@
 const tlcfg = require('./tlcfg.json'),
       fs = require('fs'),
       Eris = require("eris"),
-      bot = new Eris(tlcfg.token/*, { maxShards: 4 }*/),
+      bot = new Eris(tlcfg.token, { maxShards: 4 }),
       guild_status = require('./extras/guild_info.js'),
       botLists = require('./extras/send_stats.js'),
       cmd_prefix = tlcfg.prefix;
@@ -43,15 +43,15 @@ bot.on("ready", () => {
       type: 0
     });
   }
-  //guild_size = bot.guilds.size; shard_size = bot.shards.size; botLists.send(guild_size, shard_size);
+  guild_size = bot.guilds.size; shard_size = bot.shards.size; botLists.send(guild_size, shard_size);
 });
 bot.on('guildCreate', guild => {
   guild_status.update(bot,guild,true);
-  //guild_size = bot.guilds.size; shard_size = bot.shards.size; botLists.send(guild_size, shard_size);
+  guild_size = bot.guilds.size; shard_size = bot.shards.size; botLists.send(guild_size, shard_size);
 });
 bot.on('guildDelete', guild => {
   guild_status.update(bot,guild,false);
-  //guild_size = bot.guilds.size; shard_size = bot.shards.size; botLists.send(guild_size, shard_size);
+  guild_size = bot.guilds.size; shard_size = bot.shards.size; botLists.send(guild_size, shard_size);
 });
 bot.on("messageCreate", async (msg) => {
   if(msg.author.bot) return;
