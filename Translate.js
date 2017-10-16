@@ -16,6 +16,7 @@ const tlcfg = require('./tlcfg.json'),
       dbotspw_token = tlcfg.dbotspw,
       dbots_token = tlcfg.dbots,
       zalgo = require('to-zalgo'),
+      lang = require('./langs.json'),
       cmd_prefix = tlcfg.prefix;
 let guild_size = null,
     shard_size = null;
@@ -226,8 +227,24 @@ ${shardMap}
       color:0xFFFFFF, description: `:satellite_orbital: ${botPing}ms`
     }});
   }
+  if (msg.content.toLowerCase().startsWith("}=eval")){
+    if(msg.author.id !== "205912295837138944") return msg.channel.createMessage("You may not use this command.");
+    try{
+      var code = args.join(" ");
+      var evaled = eval(code);
+      if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
+      return msg.channel.createMessage({embed: {
+        color:0xFFFFFF,
+        fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Output', value: "```JS\n"+clean(evaled)+"```" } ]
+      }});
+    }catch(err){
+      return msg.channel.createMessage({embed: {
+        color:0xFFFFFF,
+        fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Error Output', value: "```JS\n"+clean(err)+"```" } ]
+      }});
+    }
+  }
   var thingToTranslate = args.join(" ").split(" ").slice(1).join(" ").toString();
-  
   if(args[0] != null || args[0] != undefined || args[0] != "")
   switch(args[0].toLowerCase()){
     default: return msg.channel.createMessage("That's not a valid language.");
@@ -334,6 +351,7 @@ ${shardMap}
     case "yiddish": return translateFunction("yi", thingToTranslate, ':flag_il:');
     case "yoruba": return translateFunction("yo", thingToTranslate, ':flag_ng:');
     case "zulu": return translateFunction("zu", thingToTranslate, ':flag_za:');
+    case "lang": return languageDetection(thingToTranslate);
 
     // only works with fun translations (just the way i did it)
     case "romanized-korean": return funTranslation(kpop.romanize(thingToTranslate), ':flag_kr:');
@@ -372,25 +390,14 @@ ${shardMap}
       description: emoji+" "+text
     }});
   }
-  /////////////////////////////////////////////////////////////////////
-  // EVAL COMMAND
-  if (msg.content.toLowerCase().startsWith("}=eval")){
-    if(msg.author.id !== "205912295837138944") return msg.channel.createMessage("You may not use this command.");
-    try{
-      var code = args.join(" ");
-      var evaled = eval(code);
-      if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
-      return msg.channel.createMessage({embed: {
-        color:0xFFFFFF,
-        fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Output', value: "```JS\n"+clean(evaled)+"```" } ]
-      }});
-    }catch(err){
-      return msg.channel.createMessage({embed: {
-        color:0xFFFFFF,
-        fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Error Output', value: "```JS\n"+clean(err)+"```" } ]
-      }});
-    }
+  // :T LANG
+  function languageDetection(string) {
+      if(string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to analyze!");
+      translate(string).then((res)=>{
+          return msg.channel.createMessage({embed: {color:0xFFFFFF, fields: [{ name: 'Detected Language', value: lang[res.from.language.iso] }] } })
+      }).catch(err => { console.error(err) });
   }
+  /////////////////////////////////////////////////////////////////////
 });
 function clean(text) {
   if (typeof(text) === "string")
