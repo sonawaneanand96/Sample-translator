@@ -1,4 +1,5 @@
 const tlcfg = require('./tlcfg.json'),
+      fs = require('fs'),
       Eris = require("eris"),
       bot = new Eris(tlcfg.token, { maxShards: 4 }),
       translate = require('google-translate-api'),
@@ -8,7 +9,6 @@ const tlcfg = require('./tlcfg.json'),
       kpop = require('kpop'),
       stats = require('sysstats')(),
       ostb = require('os-toolbox'),
-      fs = require('fs'),
       shell = require('shelljs'),
       japanese = require('japanese'),
       flip = require('flipout'),
@@ -120,6 +120,8 @@ bot.on('guildDelete', guild => {
 });
 
 bot.on("messageCreate", (msg) => {
+  if(msg.author.bot) return;
+  if(msg.author.id === bot.user.id) return;
   if(!msg.content.toLowerCase().startsWith(cmd_prefix)) return;
   const args = msg.content.slice(2).trim().split(/ +/g);
 
@@ -227,10 +229,11 @@ ${shardMap}
       color:0xFFFFFF, description: `:satellite_orbital: ${botPing}ms`
     }});
   }
-  if (msg.content.toLowerCase().startsWith("}=eval")){
-    if(msg.author.id !== "205912295837138944") return msg.channel.createMessage("You may not use this command.");
+  if (msg.content.toLowerCase().startsWith(cmd_prefix+" eval")) {
+    let devs = ["205912295837138944", "286166184402092042"];
+    if(!devs.includes(msg.author.id)) return msg.channel.createMessage("You may not use this command.");
     try{
-      var code = args.join(" ");
+      var code = args.slice(1).join(" ");
       var evaled = eval(code);
       if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
       return msg.channel.createMessage({embed: {
@@ -238,16 +241,16 @@ ${shardMap}
         fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Output', value: "```JS\n"+clean(evaled)+"```" } ]
       }});
     }catch(err){
-      return msg.channel.createMessage({embed: {
+      msg.channel.createMessage({embed: {
         color:0xFFFFFF,
         fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Error Output', value: "```JS\n"+clean(err)+"```" } ]
       }});
+      return console.log(`EVAL ERROR:\n${err}`);
     }
   }
   var thingToTranslate = args.join(" ").split(" ").slice(1).join(" ").toString();
   if(args[0] != null || args[0] != undefined || args[0] != "")
   switch(args[0].toLowerCase()){
-    default: return msg.channel.createMessage("That's not a valid language.");
     case "korean": return translateFunction(args[0].toLowerCase().substring(0, 2), thingToTranslate, ':flag_kr:');
     case "arabic": return translateFunction(args[0].toLowerCase().substring(0, 2), thingToTranslate, ':flag_sa:');
     case "afrikaans": return translateFunction(args[0].toLowerCase().substring(0, 2), thingToTranslate, ':flag_za:');
