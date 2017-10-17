@@ -134,7 +134,7 @@ module.exports = {
       case "zalgo": return funTranslation(zalgo(thingToTranslate), ":upside_down:");
       case "gang": case "gangsta": G.string(thingToTranslate, (err, result)=>{ if(err){ return msg.channel.createMessage("Oops, there was an error!\nDid you forget to enter something to translate?") } return funTranslation(result, ":gun:") }); break;
       case "yoda": yoda.convert(thingToTranslate, (err, result)=>{ if(err){ return msg.channel.createMessage("Oops, there was an error!\nDid you forget to enter something to translate?") } return funTranslation(result.toString(), ":rocket:") }); break;
-      default: return msg.channel.createMessage("That's not a valid lanuage!");
+      default: return msg.channel.createMessage("That's not a valid language!");
     }
     function translateFunction(lang, string, flag){
       if(string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to translate!");
