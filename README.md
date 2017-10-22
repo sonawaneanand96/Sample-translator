@@ -1,4 +1,5 @@
 # Translation-Bot
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2a6eef98e34e415fa93893f47f5b127e)](https://www.codacy.com/app/TannerReynolds/Translation-Bot?utm_source=github.com&utm_medium=referral&utm_content=TannerReynolds/Translation-Bot&utm_campaign=badger)
 [![](https://discordapp.com/api/guilds/299075280503308288/embed.png?style=banner2)](https://discord.gg/3bWf3a2)
 
 Translate Bot For Discord
