@@ -7,7 +7,7 @@
 
 Self-Hosting Agreement
 ----
-- ### You may not use the Translate logo within derivative bots.
-- ### You may not host a public version of Translate.
-- ### You may not charge for the usage of your instance of Translate.
-- ### You may not provide support for Translate.
+- #### You may not use the Translate logo within derivative bots.
+- #### You may not host a public version of Translate.
+- #### You may not charge for the usage of your instance of Translate.
+- #### You may not provide support for Translate.
