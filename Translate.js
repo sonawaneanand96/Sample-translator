@@ -55,7 +55,7 @@ bot.on('guildDelete', guild => {
 });
 bot.on("messageCreate", async (msg) => {
   if(msg.author.bot) return;
-  if(msg.content.indexOf(cmd_prefix) !== 0) return;
+  if(msg.content.toLowerCase().indexOf(cmd_prefix) !== 0) return;
   const args = msg.content.slice(cmd_prefix.length).trim().split(/ +/g);
   const command = args.shift().toString().toLowerCase();
   for(i=0;commands.length>i;i++){
@@ -64,7 +64,7 @@ bot.on("messageCreate", async (msg) => {
       break;
     }
   }
-  if(msg.content.indexOf(cmd_prefix + " ") == 0){
+  if(msg.content.toLowerCase().indexOf(cmd_prefix + " ") == 0){
     return require('./commands/_translate.js').execute(bot, msg, args, command);
   }
 });
