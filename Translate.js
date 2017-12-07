@@ -1,10 +1,21 @@
 const tlcfg = require('./tlcfg.json'),
       fs = require('fs'),
+      app = require('express')(),
       Eris = require("eris"),
-      bot = new Eris(tlcfg.token, { maxShards: 4 }),
+      bot = new Eris(tlcfg.token, { maxShards: 6 }),
       guild_status = require('./extras/guild_info.js'),
       botLists = require('./extras/send_stats.js'),
-      cmd_prefix = tlcfg.prefix;
+      cmd_prefix = tlcfg.prefix,
+      conn = require('rethinkdbdash')({ port: 28015, host:'localhost', db:'Translate' });
+      conn.dbCreate('Translate')
+      .run()
+      .then(function(response){
+        console.log('Created new translate database')
+      })
+      .error(function(err){
+        console.log('Successfully loaded database');
+      });
+      conn.tableCreate('channels', { primaryKey: 'channelID' }).run((e) => { if(e) return });
 let   guild_size = null, shard_size = null, bot_init = new Date();
 console.log('Connecting...');
 process.on('unhandledRejection', (reason)=>{ console.log("unhandledRejection\n" + reason); return; });
@@ -19,6 +30,7 @@ fs.readdir("./commands/", (err, files) => {
     }
   });
 });
+let cmdCounts = {characters: 0, ran: 0};
 bot.on("ready", () => {
   let ready_time = new Date(), start_time = Math.floor((ready_time-bot_init)/1000), userCount = bot.users.size;
   bot.editStatus('online', {
@@ -55,17 +67,62 @@ bot.on('guildDelete', guild => {
 });
 bot.on("messageCreate", async (msg) => {
   if(msg.author.bot) return;
+  conn.table('channels').get(msg.channel.id).run().then(function(Tres) {
+    if(!Tres) return;
+    let channelID = Tres.channelID;
+    if (msg.channel.id === channelID) {
+        if (msg.content == "" || msg.content == null || msg.content == undefined) return;
+        const translate = require('google-translate-api'),
+              lang = require('./langs.json');
+        translate(msg.content).then((res) => {
+            let iso1 = Tres.firstLang,
+                iso2 = Tres.secondLang
+            if (res.from.language.iso === iso1) {
+                translate(msg.content, {
+                    to: iso2
+                }).then(reso => {
+                    if (reso.text.length > 200) {
+                        return msg.channel.createMessage(`${reso.text}`);
+                    }
+                    msg.channel.createMessage({
+                        embed: {
+                            color: 0xFFFFFF,
+                            description: `${reso.text}`
+                        }
+                    });
+                })
+            }
+            if (res.from.language.iso === iso2) {
+                translate(msg.content, {
+                    to: iso1
+                }).then(reso => {
+                    if (reso.text.length > 200) {
+                        return msg.channel.createMessage(`${reso.text}`);
+                    }
+                    msg.channel.createMessage({
+                        embed: {
+                            color: 0xFFFFFF,
+                            description: `${reso.text}`
+                        }
+                    });
+                })
+            }
+        });
+    }
+});
   if(msg.content.toLowerCase().indexOf(cmd_prefix) !== 0) return;
   const args = msg.content.slice(cmd_prefix.length).trim().split(/ +/g);
   const command = args.shift().toString().toLowerCase();
   for(i=0;commands.length>i;i++){
     if(commands[i].command == command){
-      return await commands[i].execute(bot, msg, args);
+      return await commands[i].execute(bot, msg, args, cmdCounts, conn);
       break;
     }
   }
   if(msg.content.toLowerCase().indexOf(cmd_prefix + " ") == 0){
-    return require('./commands/_translate.js').execute(bot, msg, args, command);
+    require('./commands/_translate.js').execute(bot, msg, args, command, cmdCounts);
+    cmdCounts.characters = cmdCounts.characters + args.join(" ").length;
+    return cmdCounts.ran++;
   }
 });
 
