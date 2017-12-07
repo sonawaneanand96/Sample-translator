@@ -69,6 +69,7 @@ bot.on("messageCreate", async (msg) => {
   if(msg.author.bot) return;
   conn.table('channels').get(msg.channel.id).run().then(function(Tres) {
     if(!Tres) return;
+    if(msg.content.toLowerCase().startsWith(':t')) return;
     let channelID = Tres.channelID;
     if (msg.channel.id === channelID) {
         if (msg.content == "" || msg.content == null || msg.content == undefined) return;
@@ -84,11 +85,12 @@ bot.on("messageCreate", async (msg) => {
                     to: iso2
                 }).then(reso => {
                     if (reso.text.length > 200) {
-                        return msg.channel.createMessage(`${reso.text}`);
+                        return msg.channel.createMessage(`**${msg.author.username}#${msg.author.discriminator}**: ${reso.text}`);
                     }
                     msg.channel.createMessage({
                         embed: {
                             color: 0xFFFFFF,
+                            author: { name: `${msg.author.username}#${msg.author.discriminator}`, icon_url: msg.author.avatarURL },
                             description: `${reso.text}`
                         }
                     });
@@ -99,11 +101,12 @@ bot.on("messageCreate", async (msg) => {
                     to: iso1
                 }).then(reso => {
                     if (reso.text.length > 200) {
-                        return msg.channel.createMessage(`${reso.text}`);
+                      return msg.channel.createMessage(`**${msg.author.username}#${msg.author.discriminator}**: ${reso.text}`);
                     }
                     msg.channel.createMessage({
                         embed: {
                             color: 0xFFFFFF,
+                            author: { name: `${msg.author.username}#${msg.author.discriminator}`, icon_url: msg.author.avatarURL },
                             description: `${reso.text}`
                         }
                     });
