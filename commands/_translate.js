@@ -10,7 +10,7 @@ const translate = require('google-translate-api'),
       japanese = require('japanese');
 
 module.exports = {
-  execute:async function(bot, msg, args, command){
+  execute:async function(bot, msg, args, command, cmdCounts){
     var thingToTranslate = args.join(" ");
     switch(command){
       case "korean": return translateFunction(command.substring(0, 2), thingToTranslate, ':flag_kr:');
@@ -134,7 +134,6 @@ module.exports = {
       case "zalgo": return funTranslation(zalgo(thingToTranslate), ":upside_down:");
       case "gang": case "gangsta": G.string(thingToTranslate, (err, result)=>{ if(err){ return msg.channel.createMessage("Oops, there was an error!\nDid you forget to enter something to translate?") } return funTranslation(result, ":gun:") }); break;
       case "yoda": yoda.convert(thingToTranslate, (err, result)=>{ if(err){ return msg.channel.createMessage("Oops, there was an error!\nDid you forget to enter something to translate?") } return funTranslation(result.toString(), ":rocket:") }); break;
-      default: return msg.channel.createMessage("That's not a valid language!");
     }
     function translateFunction(lang, string, flag){
       if(string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to translate!");
@@ -148,7 +147,7 @@ module.exports = {
       }).catch(err => { console.error(err) });
     }
     function funTranslation(text, emoji){
-      if(text == "" || text == null || text == undefined || text.includes("<!DOCTYPE")) return msg.channel.createMessage("Nothing to translate!");
+      if(text == "" || text == null || text == undefined || text.includes("<!DOCTYPE")) return msg.channel.createMessage("Translation failed.");
       if (text.length > 200) { return msg.channel.createMessage(text); }
       msg.channel.createMessage({ embed: {
         color: 0xFFFFFF,
