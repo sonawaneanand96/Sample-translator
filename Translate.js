@@ -75,6 +75,8 @@ bot.on("messageCreate", async (msg) => {
         const translate = require('google-translate-api'),
               lang = require('./langs.json');
         translate(msg.content).then((res) => {
+            cmdCounts.characters = cmdCounts.characters + msg.content.length;
+            cmdCounts.ran++;
             let iso1 = Tres.firstLang,
                 iso2 = Tres.secondLang
             if (res.from.language.iso === iso1) {
