@@ -24,7 +24,7 @@
     "flipout": "^1.0.0",
     "get-first-words": "^1.0.0",
     "gizoogle": "0.0.6",
-    "google-translate-api": "^2.3.0",
+    "google-translate-api": "github:TannerReynolds/google-translate-api"
     "japanese": "^1.2.0",
     "kpop": "^0.1.2",
     "os-toolbox": "^0.2.7",
