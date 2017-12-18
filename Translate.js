@@ -70,6 +70,7 @@ bot.on("messageCreate", async (msg) => {
   conn.table('channels').get(msg.channel.id).run().then(function(Tres) {
     if(!Tres) return;
     if(msg.content.toLowerCase().startsWith(':t')) return;
+    if(msg.content.startsWith('<') && msg.content.endsWith('>')) return;
     let channelID = Tres.channelID;
     if (msg.channel.id === channelID) {
         if (msg.content == "" || msg.content == null || msg.content == undefined) return;
