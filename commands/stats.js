@@ -1,20 +1,20 @@
 const ostb = require('os-toolbox');
 module.exports = {
-  command:"stats",
-  execute:async function(bot, msg, args){
-    await msg.channel.createMessage("Getting Statistics...")
-    .then((message)=>{
+  command: "stats",
+  execute: async (bot, msg, args) => {
+    return await msg.channel.createMessage("Getting Statistics...")
+    .then(async (message) => {
       let servers = bot.guilds.size,
           playercount = bot.users.size,
           mintime = ostb.uptime() / 60,
           uptime = Math.floor(mintime / 60),
           serversLarge = bot.guilds.filter(m => m.large).size,
           botPing = Math.floor(msg.channel.guild.shard.latency);
-      ostb.cpuLoad().then((cpuusage)=>{ ostb.memoryUsage().then((memusage)=>{ ostb.currentProcesses().then((processes)=>{
-        const curpro = processes;
-        const meuse = memusage;
-        const acusage = cpuusage;
-      message.edit(
+      return await ostb.cpuLoad().then(async (cpuusage)=>{ await ostb.memoryUsage().then(async (memusage)=>{ await ostb.currentProcesses().then(async (processes)=>{
+        const curpro = processes
+        const meuse = memusage
+        const acusage = cpuusage
+        return await message.edit(
           "**Statistics:**\n```INI\n[CPU]: "+acusage+"%\n\n"+
           "[RAM]: "+meuse+"%\n\n"+
           "[Shards]: "+bot.shards.size+"\n\n"+
@@ -27,8 +27,8 @@ module.exports = {
           "[Hosting Provider]: Vultr Holdings LLC\n\n"+
           "[Client Uptime]: "+Math.floor(((bot.uptime / (1000*60*60)) % 24))+" hours\n\n"+
           "[Server Uptime]: "+JSON.stringify(uptime)+" hours```"
-        );
-      });});});
-    });
+        )
+      })})})
+    })
   }
 }

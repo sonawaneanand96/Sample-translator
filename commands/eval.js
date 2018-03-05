@@ -1,28 +1,35 @@
+const { inspect } = require('util')
+
 module.exports = {
-  command:"eval",
-  execute:async function(bot, msg, args){
-    let devs = ["205912295837138944", "286166184402092042"];
-    if(!devs.includes(msg.author.id)) return msg.channel.createMessage("You cant use this lol.");
-    try{
-      var code = args.join(" ");
-      var evaled = eval(code);
-      if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
-      return msg.channel.createMessage({embed: {
-        color:0xFFFFFF,
-        fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Output', value: "```JS\n"+clean(evaled)+"```" } ]
-      }});
-    }catch(err){
-      msg.channel.createMessage({embed: {
-        color:0xFFFFFF,
-        fields: [ { name: 'Input', value: "```JS\n"+code+"```" }, { name: 'Error Output', value: "```JS\n"+clean(err)+"```" } ]
-      }});
-      return console.log(`EVAL ERROR:\n${err}`);
+  command: "eval",
+  execute: async (Client, msg, args) => {
+    let safe = Client.token
+    Client.token = "no u lmao"
+    let devs = ["205912295837138944", "286166184402092042"]
+    let result
+    let input = args.join(' ')
+    if (!devs.includes(msg.author.id)) return
+    try {
+      result = eval(`((m, a) => { ${(args[0] === 'return') ? input : 'return ' + input} })(msg, args)`)
+      if (typeof result !== 'string') {
+        result = inspect(result)
+      }
+    } catch (err) {
+      result = err.message;
     }
+    Client.token = safe
+    return await msg.channel.createMessage({embed:{
+      color: 0x7188d9,
+      fields: [
+        {
+          name: '📥 Input',
+          value: '```JS\n' + input + '\n```'
+        },
+        {
+          name: '📤 Result',
+          value: '```JS\n' + result.substr(0, 1000) + '\n```'
+        }
+      ]
+    }})
   }
-}
-function clean(text){
-  if(typeof(text) === "string")
-    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-  else
-    return text;
 }
