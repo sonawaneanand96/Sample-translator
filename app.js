@@ -4,7 +4,7 @@ const Eris = require("eris")
 const OS = require('os')
 const translate = require('google-translate-api')
 const lang = require('./langs.json')
-const Client = new Eris(tlcfg.token, { maxShards: 1 }) // OS.cpus().length
+const Client = new Eris(tlcfg.token, { maxShards: OS.cpus().length })
 const guild_status = require('./extras/guild_info.js')
 const botLists = require('./extras/send_stats.js')
 const cmd_prefix = tlcfg.prefix
@@ -128,7 +128,7 @@ Client.connect()
 
 
 // Bot lists update every hour //
-// setInterval(botLists.send(guild_size, shard_size), 3600000)
+setInterval(botLists.send(guild_size, shard_size), 3600000)
 
 // ERROR HANDLING //
 process.on('unhandledRejection', (reason)=>{ console.log("unhandledRejection\n" + reason); return; })
