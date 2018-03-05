@@ -12,20 +12,20 @@ const japanese = require('japanese')
 let langs = require('./../langmap.json')
 let LangMap = new Map()
 
-for (let l in langs) {
-  for (let a in langs[l].alias) {
-    LangMap.set(langs[l].alias[a], (args) => {
-      return translateFunction(l, args.join(" "), `:flag_${langs[l].flag}:`)
-    })
-  }
-}
-
 module.exports = {
   execute: async function(bot, msg, args, command, cmdCounts){
     var thingToTranslate = args.join(" ");
 
     if (command === "lang") return languageDetection(thingToTranslate)
 
+    for (let l in langs) {
+      for (let a in langs[l].alias) {
+        LangMap.set(langs[l].alias[a], (args) => {
+          return translateFunction(l, args.join(" "), `:flag_${langs[l].flag}:`)
+        })
+      }
+    }
+    
     let toT = LangMap.get(command)
 
     if (toT) {
