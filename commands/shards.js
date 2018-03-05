@@ -1,11 +1,15 @@
 module.exports = {
-  command:"shards",
-  execute:async function(bot, msg, args){
-    await msg.channel.createMessage("Getting Shards...")
-    .then((message)=>{
-      let shardMap = bot.shards.map(s => `= [ID]: ${s.id} | [Ping]: ${s.latency} | [Status]: ${s.status} =`).join("\n");
+  command: "shards",
+  execute: async (bot, msg, args) => {
+    return await msg.channel.createMessage("Getting Shards...")
+    .then(async (message) => {
+      let shards = ''
+      bot.shards.map((s) => {
+        if (msg.channel.guild.shard === s) shards += `= [ID]: ${((s.id.length === 1) ? s.id + ' ' : s.id)} | CURRENT SHARD | =\n`
+        else shards += `= [ID]: ${((s.id.length === 1) ? s.id + ' ' : s.id)} | [Ping]: ${((s.latency.length === 2) ? s.latency + ' ' : s.latency)}ms | [Status]: ${s.status} =\n`
+      }).join("\n");
       let s = msg.channel.guild.shard;
-      message.edit(`\`\`\`asciidoc\n[Current Shard]\n= [ID]: ${s.id} | [Ping]: ${s.latency} | [Status]: ${s.status} =\n[All Shards]\n${shardMap}\n\`\`\``);
-    });
+      return await message.edit(`\`\`\`asciidoc\n[Current Shard]\n= [ID]: ${((s.id.length === 1) ? s.id + ' ' : s.id)} | [Ping]: ${((s.latency.length === 2) ? s.latency + ' ' : s.latency)}ms | [Status]: ${s.status} =\n\n[Other Shards]\n${shards}\n\`\`\``);
+    })
   }
 }
