@@ -2,14 +2,14 @@ const ostb = require('os-toolbox');
 const { exec } = require('child_process');
 module.exports = {
   command:"stats",
-  execute:async (bot, msg, args, command, cmdCounts) => {
+  execute: async (Client, msg, args, counts, conn) => {
     await msg.channel.createMessage("<a:loading:393670580232257538> Performing speedtests...")
     .then((message)=>{
-      let servers = bot.guilds.size,
+      let servers = Client.guilds.size,
           mintime = ostb.uptime() / 60,
           uptime = Math.floor(mintime / 60),
-          serversLarge = bot.guilds.filter(m => m.large).size,
-          botPing = Math.floor(msg.channel.guild.shard.latency);
+          serversLarge = Client.guilds.filter(m => m.large).size,
+          ClientPing = Math.floor(msg.channel.guild.shard.latency);
 
       exec("speedtest-cli --simple", (error, stdout, stderr) => {
       ostb.cpuLoad().then((cpuusage)=>{ ostb.memoryUsage().then((memusage)=>{ ostb.currentProcesses().then((processes)=>{
@@ -26,12 +26,12 @@ module.exports = {
             { name: 'Server Memory Usage', value: `${meuse}%` },
             { name: 'Nodejs Memory Usage', value: `${processMemoryMB().toString()} MB` },
             { name: 'Nodejs Version', value: process.version },
-            { name: 'Shard Count', value: bot.shards.size },
-            { name: 'Guild Count', value: bot.guilds.size },
-            { name: 'Member Count', value: bot.users.size },
-            { name: 'Times Translated (Since Restart)', value: cmdCounts.ran },
-            { name: 'Amount Of Characters Translated (Since Restart)', value: cmdCounts.characters },
-            { name: 'Client Uptime', value: `${Math.floor(((bot.uptime / (1000*60*60)) % 24))} hours` },
+            { name: 'Shard Count', value: Client.shards.size },
+            { name: 'Guild Count', value: Client.guilds.size },
+            { name: 'Member Count', value: Client.users.size },
+            { name: 'Times Translated (Since Restart)', value: counts.ran },
+            { name: 'Amount Of Characters Translated (Since Restart)', value: counts.characters },
+            { name: 'Client Uptime', value: `${Math.floor(((Client.uptime / (1000*60*60)) % 24))} hours` },
             { name: 'Server Uptime', value: `${JSON.stringify(uptime)} hours` },
             { name: 'Speed Test Results', value: `\`\`\`\n${stdout}\n\`\`\`` }
           ]
