@@ -2,7 +2,7 @@ const ostb = require('os-toolbox');
 const { exec } = require('child_process');
 module.exports = {
   command:"stats",
-  execute:async (Client, msg, args, command, cmdCounts) => {
+  execute:async (bot, msg, args, command, cmdCounts) => {
     await msg.channel.createMessage("<a:loading:393670580232257538> Performing speedtests...")
     .then((message)=>{
       let servers = bot.guilds.size,
