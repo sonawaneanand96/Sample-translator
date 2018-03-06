@@ -4,7 +4,7 @@ const Eris = require("eris")
 const OS = require('os')
 const translate = require('google-translate-api')
 const lang = require('./langs.json')
-const Client = new Eris(tlcfg.token, { maxShards: OS.cpus().length })
+const Client = new Eris(tlcfg.token, { maxShards: 10 })
 const guild_status = require('./extras/guild_info.js')
 const botLists = require('./extras/send_stats.js')
 const cmd_prefix = tlcfg.prefix
@@ -80,16 +80,14 @@ Client.on("messageCreate", async (msg) => {
 
   await conn.table('channels').get(msg.channel.id).run().then(async (Tres) => {
     if (!Tres) return
-    if (msg.channel.id !== Tres.channelID) return
-    if (msg.content.toLowerCase().startsWith(':t')) return
-    if (msg.content.startsWith('<') && msg.content.endsWith('>')) return
-    if (msg.content.startsWith('<')) return
+    if (msg.channel.id !== Tres.channelID || msg.content.toLowerCase().startsWith(':t')) return
+    if (msg.content.startsWith('<') && msg.content.endsWith('>') || msg.content.startsWith('<')) return
     if (msg.content == "" || msg.content == null || msg.content == undefined) return
     return await translate(msg.content).then(async (res) => {
       cmdCounts.characters = cmdCounts.characters + msg.content.length
       cmdCounts.ran++
-      let iso1 = Tres.firstLang
-      let iso2 = Tres.secondLang
+      let iso1 = Tres.firstLang.replace(/[()]+/, '')
+      let iso2 = Tres.secondLang.replace(/[()]+/, '')
       await translate(msg.content, {
         to: ((res.from.language.iso === iso1) ? iso2 : iso1)
       }).then(async (reso) => {
@@ -128,7 +126,7 @@ Client.connect()
 
 
 // Bot lists update every hour //
-setInterval(botLists.send(guild_size, shard_size), 3600000)
+setInterval(() => { return botLists.send(guild_size, shard_size) }, 1800000)
 
 // ERROR HANDLING //
 process.on('unhandledRejection', (reason)=>{ console.log("unhandledRejection\n" + reason); return; })
