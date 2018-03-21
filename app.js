@@ -76,7 +76,7 @@ Client.on('guildDelete', (guild) => {
 
 Client.on("messageCreate", async (msg) => {
 
-  // if(msg.author.bot) return
+ if(msg.author.bot) return
 
   await conn.table('channels').get(msg.channel.id).run().then(async (Tres) => {
     if (!Tres) return
