@@ -4,7 +4,9 @@ const Eris = require("eris")
 const OS = require('os')
 const translate = require('google-translate-api')
 const lang = require('./langs.json')
-const Client = new Eris(tlcfg.token, { maxShards: 10 })
+const Dbl = require('dblapi.js');
+const dbl = new Dbl(tlcfg.dbots);
+const Client = new Eris(tlcfg.token, { maxShards: 10, getAllUsers: true, disableEveryone: false })
 const guild_status = require('./extras/guild_info.js')
 const botLists = require('./extras/send_stats.js')
 const cmd_prefix = tlcfg.prefix
@@ -30,6 +32,9 @@ fs.readdir("./commands/", (err, files) => {
 })
 
 let cmdCounts = {characters: 0, ran: 0}
+
+let upvotes = [];
+setInterval(() => getUpvotes(), 10000) // get Upvotes once every 10 seconds
 
 Client.on("ready", () => {
   let ready_time = new Date(), start_time = Math.floor((ready_time-bot_init)/1000), userCount = Client.users.size
@@ -108,8 +113,8 @@ Client.on("messageCreate", async (msg) => {
   const command = args.shift().toString().toLowerCase();
 
   let CMD = commands.get(command)
-
   if (CMD) {
+    if(CMD.command === "channel" && await upvote(msg.author.id) === false) return msg.channel.createMessage({embed: { color:0x36393E, title: "You must upvote Translate to use this command!", fields: [{name: "Upvote URL", value: "https://discordbots.org/bot/318554710929833986/vote"}], footer: {text: "Once you upvote this bot, you will have access to this command"}  }});
     return await CMD(Client, msg, args, cmdCounts, conn)
   }
 
@@ -120,6 +125,28 @@ Client.on("messageCreate", async (msg) => {
   }
 
 })
+
+async function getUpvotes() {
+  try {
+    await dbl.getVotes(true, 7).then(votes => upvotes = votes );
+  } catch (e) {
+    return;
+  }
+}
+
+async function upvote(id) {
+  let bool
+  try {
+    if(upvotes.includes(id)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+  } catch (e) {
+    bool = true;
+  }
+  return bool
+}
 
 Client.connect()
 
