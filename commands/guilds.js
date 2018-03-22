@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs");
 module.exports = {
   command: "guilds",
   execute: async (Client, msg, args) => {
@@ -15,12 +15,12 @@ module.exports = {
     return await fs.writeFile(`${msg.id}_${Client.uptime}GUILDINFO.json`, JSON.stringify(translateGuilds), async (err) => {
       if (err){
         console.log(err)
-        return await msg.channel.createMessage('Error while processing guild information.')
+        return await msg.channel.createMessage("Error while processing guild information.")
       } else {
         return await msg.channel.createMessage(`Guild Info file made! Reporting info on ${Client.guilds.size} guilds!`)
         .then(async () => {
           let fileContent = `{\n${translateGuilds}\n}`.replace("\\", "/")
-          return await msg.channel.createMessage('', {name: "GuildInfo.json", file: fileContent})
+          return await msg.channel.createMessage("", {name: "GuildInfo.json", file: fileContent})
         })
       }
     })

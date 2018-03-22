@@ -1,20 +1,20 @@
-const translate = require('google-translate-api')
-const G = require('gizoogle')
-const tlcfg = require('./../tlcfg.json')
-const YodaSpeak = require('yoda-speak')
+const translate = require("google-translate-api")
+const G = require("gizoogle")
+const tlcfg = require("./../tlcfg.json")
+const YodaSpeak = require("yoda-speak")
 const yoda = new YodaSpeak(tlcfg.yoda)
-const zalgo = require('to-zalgo')
-const flip = require('flipout')
-const kpop = require('kpop')
-const lang = require('./../langs.json')
-const japanese = require('japanese')
+const zalgo = require("to-zalgo")
+const flip = require("flipout")
+const kpop = require("kpop")
+const lang = require("./../langs.json")
+const japanese = require("japanese")
 
-let langs = require('./../langmap.json')
+let langs = require("./../langmap.json")
 let LangMap = new Map()
 
 module.exports = {
-  execute: async function(bot, msg, args, command, cmdCounts){
-    var thingToTranslate = args.join(" ");
+  execute: async (bot, msg, args, command, cmdCounts) => {
+    let thingToTranslate = args.join(" ");
 
     if (command === "lang") return languageDetection(thingToTranslate)
 
@@ -33,11 +33,11 @@ module.exports = {
     }
 
     switch(command){
-      case "romanized-korean": return funTranslation(kpop.romanize(thingToTranslate), ':flag_kr:');
-      case "hangulified-korean": return funTranslation(kpop.hangulify(thingToTranslate), ':flag_kr:');
-      case "romanized-japanese": return funTranslation(japanese.romanize(thingToTranslate), ':flag_jp:');
-      case "katakanized-japanese": return funTranslation(japanese.katakanize(thingToTranslate), ':flag_jp:');
-      case "hiraganized-japanese": return funTranslation(japanese.hiraganize(thingToTranslate), ':flag_jp:');
+      case "romanized-korean": return funTranslation(kpop.romanize(thingToTranslate), ":flag_kr:");
+      case "hangulified-korean": return funTranslation(kpop.hangulify(thingToTranslate), ":flag_kr:");
+      case "romanized-japanese": return funTranslation(japanese.romanize(thingToTranslate), ":flag_jp:");
+      case "katakanized-japanese": return funTranslation(japanese.katakanize(thingToTranslate), ":flag_jp:");
+      case "hiraganized-japanese": return funTranslation(japanese.hiraganize(thingToTranslate), ":flag_jp:");
       case "flip": case "flipped": return funTranslation(flip(thingToTranslate), ":upside_down:");
       case "zalgo": return funTranslation(zalgo(thingToTranslate), ":upside_down:");
       case "gang": case "gangsta": G.string(thingToTranslate, (err, result)=>{ if(err){ return msg.channel.createMessage("Oops, there was an error!\nDid you forget to enter something to translate?") } return funTranslation(result, ":gun:") }); break;
@@ -68,7 +68,7 @@ module.exports = {
     function languageDetection(string) {
       if(string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to analyze!");
       translate(string).then((res)=>{
-        return msg.channel.createMessage({embed: {color:0xFFFFFF, fields: [{ name: 'Detected Language', value: lang[res.from.language.iso] }] } })
+        return msg.channel.createMessage({embed: {color:0xFFFFFF, fields: [{ name: "Detected Language", value: lang[res.from.language.iso] }] } })
       }).catch(err => { console.error(err) });
     }
   }

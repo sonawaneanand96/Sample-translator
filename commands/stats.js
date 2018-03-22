@@ -1,10 +1,13 @@
-const ostb = require('os-toolbox');
-const { exec } = require('child_process');
+const ostb = require("os-toolbox");
+const { exec } = require("child_process");
 module.exports = {
   command:"stats",
-  execute:async function(bot, msg, args, counts, conn){
+  execute:async (bot, msg, args, conn) => {
     await msg.channel.createMessage("<a:loading:393670580232257538> Performing speedtests...")
-    .then((message)=>{
+    .then(message => {
+      let date = new Date()
+      let month = date.getMonth() + 1;
+      month = month.toString();
       let servers = bot.guilds.size,
           mintime = ostb.uptime() / 60,
           uptime = Math.floor(mintime / 60),
@@ -14,6 +17,12 @@ module.exports = {
       
       regionsUsed().then(r => {
         regionInfo = r;
+      })
+
+      let charCount
+      conn.table('stats').get(month).run().then(entry => {
+        if(!entry) return
+        charCount = entry.characters
       })
 
       exec("speedtest-cli --simple", (error, stdout, stderr) => {
@@ -28,16 +37,17 @@ module.exports = {
           title: "Statistics",
           footer: { text: msg.channel.guild.name, icon_url: msg.channel.guild.iconURL },
           fields: [
-            { name: 'Server Memory Usage', value: `${meuse}%` },
-            { name: 'Nodejs Memory Usage', value: `${processMemoryMB().toString()} MB` },
-            { name: 'Nodejs Version', value: process.version },
-            { name: 'Shard Count', value: bot.shards.size },
-            { name: 'Guild Count', value: bot.guilds.size },
-            { name: 'Member Count', value: bot.users.size },
-            { name: 'Guild Region Information', value: regionInfo},
-            { name: 'Client Uptime', value: `${Math.floor(((bot.uptime / (1000*60*60)) % 24))} hours` },
-            { name: 'Server Uptime', value: `${JSON.stringify(uptime)} hours` },
-            { name: 'Speed Test Results', value: `\`\`\`\n${stdout}\n\`\`\`` }
+            { name: "Server Memory Usage", value: `${meuse}%` },
+            { name: "Nodejs Memory Usage", value: `${processMemoryMB().toString()} MB` },
+            { name: "Nodejs Version", value: process.version },
+            { name: "Shard Count", value: bot.shards.size },
+            { name: "Guild Count", value: bot.guilds.size },
+            { name: "Member Count", value: bot.users.size },
+            { name: "Guild Region Information", value: regionInfo},
+            { name: "Characters Translated This Month", value: `\`${charCount}\``},
+            { name: "Client Uptime", value: `${Math.floor(((bot.uptime / (1000*60*60)) % 24))} hours` },
+            { name: "Server Uptime", value: `${JSON.stringify(uptime)} hours` },
+            { name: "Speed Test Results", value: `\`\`\`\n${stdout}\n\`\`\`` }
           ]
         }});
       });});});});
