@@ -6,49 +6,32 @@ const translate = require("google-translate-api")
 const lang = require("./langs.json")
 const Dbl = require("dblapi.js");
 const dbl = new Dbl(tlcfg.dbots);
-const Client = new Eris(tlcfg.token, { maxShards: 10, getAllUsers: true, disableEveryone: false })
+const bot = new Eris(tlcfg.token, { maxShards: 10, getAllUsers: true, disableEveryone: false })
 let guildStatus = require("./functions/guildInfo.js")
 let botLists = require("./functions/sendStats.js")
 let tsChannels = require("./functions/tsChannels.js")
+let singleTChannel = require("./functions/singleChannelTranslations.js")
 const prefix = tlcfg.prefix;
 let date = new Date()
 let month = date.getMonth() + 1;
 month = month.toString();
+let year = date.getFullYear();
+year = year.toString();
+let statsEntry = `${month}/${year}`
 const conn = require("rethinkdbdash")({ port: 28015, host:"localhost", db:"Translate" })
 conn.dbCreate("Translate").run()
   .then((res) => console.log("Created new translate database"))
   .error((err) => console.log("Successfully loaded database"))
 conn.tableCreate("channels", { primaryKey: "channelID" }).run((e) => { if(e) return })
-conn.tableCreate("stats", { primaryKey: "month" }).run((e) => { if(e) return }).then(() => {
-  conn.table('stats').get(month).run().then(entry => {
-    if (!entry) {
-        conn.table('stats')
-        .insert({
-          month: month,
-          characters: "0"
-        })
-        .run()
-        .then(res => console.log("Added new month to database") )
-        .error(e => { return });
-      } else {
-        conn.table('stats')
-        .insert({
-          month: month,
-          characters: "0"
-        })
-        .run()
-        .then(res => console.log("Added new month to database") )
-        .error(e => { return });
-      }
-  });
-})
+conn.tableCreate("stats", { primaryKey: "month" }).run((e) => { if(e) return })
 
 let guildSize = null, shardSize = null, botInit = new Date();
 
+// Gets all command files from ./commands/ //
 let commands = new Map()
 fs.readdir("./commands/", (err, files) => {
   files.forEach(file => {
-    if(file.toString().indexOf("_") != 0 && file.toString().includes(".js")){
+    if(file.toString().indexOf("_") != 0 && file.toString().includes(".js")) { // Ignores _translate.js
       let CMD = require(`./commands/${file.toString()}`)
       if (CMD) {
         commands.set(CMD.command, CMD.execute)
@@ -57,53 +40,68 @@ fs.readdir("./commands/", (err, files) => {
   })
 })
 
-let upvotes = [];
-setInterval(() => getUpvotes(), 10000) // get Upvotes once every 10 seconds
+let upvotes = []; // Checks this array every time a command is ran
+setInterval(() => getUpvotes(), 10000) // get Upvotes from discordbots.org once every 10 seconds
 
-Client.on("ready", () => {
-  let readyTime = new Date(), startTime = Math.floor( (readyTime - botInit) / 1000), userCount = Client.users.size
-  console.log(`Client ONLINE. ${Client.guilds.size} guilds, serving ${userCount} users.`)
+bot.on("ready", () => {
+  let readyTime = new Date(), startTime = Math.floor( (readyTime - botInit) / 1000), userCount = bot.users.size
+  console.log(`bot ONLINE. ${bot.guilds.size} guilds, serving ${userCount} users.`)
   console.log(`Took ${startTime} seconds to start.`)
 
+  guildSize = bot.guilds.size
+  shardSize = bot.shards.size
+
   setInterval(newGame, (1000*30))
-
-  guildSize = Client.guilds.size
-  shardSize = Client.shards.size
-
   const gmstr = [
     `${prefix} help | ${userCount} users`,
-    `${prefix} help | ${Client.guilds.size} guilds`,
+    `${prefix} help | ${bot.guilds.size} guilds`,
     `${prefix} help | ${prefix} invite`,
-    `${prefix} help | ${Client.guilds.size} servers & ${userCount} users! | Want to support Translate"s existence? go here! https://www.patreon.com/TannerReynolds`,
+    `${prefix} help | ${bot.guilds.size} servers & ${userCount} users! | Want to support Translate"s existence? go here! https://www.patreon.com/TannerReynolds`,
     `${prefix} patreon | ${prefix} invite`,
     `${prefix} patreon`
   ]
   function newGame() {
     let randomNumber = Math.floor(Math.random() * gmstr.length)
-    Client.editStatus("online", {
+    bot.editStatus("online", {
       name: gmstr[randomNumber],
       type: 0
     })
   }
-  Client.editStatus("online", {
-    name: `${prefix} help | ${Client.guilds.size} servers & ${userCount} users! | Want to support Translate"s existence? go here! https://www.patreon.com/TannerReynolds`,
+
+  bot.editStatus("online", {
+    name: `${prefix} help | ${bot.guilds.size} servers & ${userCount} users! | Want to support Translate"s existence? go here! https://www.patreon.com/TannerReynolds`,
     type: 0
   })
 })
 
-Client.on("guildCreate", guild => {
-  guildStatus.update(Client, guild, true);
-  guildSize = Client.guilds.size
-  shardSize = Client.shards.size
+bot.on("guildCreate", guild => {
+  guildStatus.update(bot, guild, true);
+  guildSize = bot.guilds.size
+  shardSize = bot.shards.size
+})
+bot.on("guildDelete", guild => {
+  guildStatus.update(bot, guild, false);
+  guildSize = bot.guilds.size
+  shardSize = bot.shards.size
 })
 
-Client.on("guildDelete", guild => {
-  guildStatus.update(Client, guild, false);
-  guildSize = Client.guilds.size
-  shardSize = Client.shards.size
-})
+bot.on("messageCreate", async msg => {
 
-Client.on("messageCreate", async msg => {
+  // Creating new table in stats DB per month if one does not exist
+  await conn.table('stats').get(statsEntry).run().then(entry => {
+    if (!entry) {
+        conn.table('stats')
+        .insert({
+          month: statsEntry,
+          characters: "0" // Stores both the month and character count as strings due to NaN issues
+        })
+        .run()
+        .then(res => console.log("Added new month to database") )
+        .error(e => { return });
+      }
+  });
+
+  // Shitty reload stuff I put here as a temporary thing that I refuse to make better //
   if(msg.author.id === "205912295837138944" && msg.content.toLowerCase() === "tr") {
     let commands = new Map()
     fs.readdir("./commands/", (err, files) => {
@@ -120,72 +118,54 @@ Client.on("messageCreate", async msg => {
     delete require.cache[require.resolve("./functions/guildInfo.js")];
     delete require.cache[require.resolve("./functions/sendStats.js")];
     delete require.cache[require.resolve("./functions/tsChannels.js")];
+    delete require.cache[require.resolve("./functions/singleChannelTranslations.js")];
     guildStatus = require("./functions/guildInfo.js")
     botLists = require("./functions/sendStats.js")
     tsChannels = require("./functions/tsChannels.js")
-  }
- if(msg.author.bot) return
- await conn.table("channels").get(msg.channel.id).run().then(async tRes => {
-  if (!tRes) return
-  if (msg.channel.id !== tRes.channelID || msg.content.toLowerCase().startsWith(":t")) return
-  if (msg.content.startsWith("<") && msg.content.endsWith(">") || msg.content.startsWith("<")) return
-  if (msg.content == "" || msg.content == null || msg.content == undefined) return
-  return await translate(msg.content).then(async res => {
-    let charCount
-    await conn.table('stats').get(month).run().then(entry => {
-      if(!entry) return
-      charCount = entry.characters
-    })
-    charCount = parseInt(charCount) + msg.content.length
-    let replaced = {
-      month: month,
-      characters: charCount.toString()
-    }
-    await conn.table('stats').get(month).replace(replaced).run()
-    let iso1 = tRes.firstLang.replace(/[()]+/, "")
-    let iso2 = tRes.secondLang.replace(/[()]+/, "")
-    await translate(msg.content, {
-      to: ((res.from.language.iso === iso1) ? iso2 : iso1)
-    }).then(async reso => {
-      if (reso.text.length > 200) {
-        return await msg.channel.createMessage(`**${msg.author.username}#${msg.author.discriminator}**: ${reso.text}`)
-      }
-      return await msg.channel.createMessage({embed:{
-        color: 0xFFFFFF,
-        author: { name: `${msg.author.username}#${msg.author.discriminator}`, icon_url: msg.author.avatarURL },
-        description: `${reso.text}`
-      }})
-    })
-  })
-})
+    singleTChannel = require("./functions/singleChannelTranslations.js")
+  } // End of shitty reload thing //
 
+  if(msg.author.bot) return
+
+  // Defining command vars //
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toString().toLowerCase();
-    tsChannels.translate(Client, msg, args, command, conn)
-    if(msg.content.toLowerCase().indexOf(prefix) !== 0) return;
+
+  // First automatic translation channel method (:t channel) //
+  singleTChannel.translate(bot, msg, args, command, conn)
+  
+  // Second automatic translation channel method (ts-channels) //
+  tsChannels.translate(bot, msg, args, command, conn)
+
+  // Commands //
+  if(msg.content.toLowerCase().indexOf(prefix) !== 0) return;
   let CMD = commands.get(command)
   if (CMD) {
     if(CMD.command === "channel" && await upvote(msg.author.id) === false) return msg.channel.createMessage({embed: { color:0x36393E, title: "You must upvote Translate to use this command!", fields: [{name: "Upvote URL", value: "https://discordbots.org/bot/318554710929833986/vote"}], footer: {text: "Once you upvote this bot, you will have access to this command"}  }});
-    return await CMD(Client, msg, args, conn)
+    return await CMD(bot, msg, args, conn)
   }
-
   if(msg.content.toLowerCase().indexOf(prefix + " ") == 0){
+    
+    // Stats updater //
     let charCount
-    await conn.table('stats').get(month).run().then(entry => {
+    await conn.table('stats').get(statsEntry).run().then(entry => {
       if(!entry) return
       charCount = entry.characters
     })
     charCount = parseInt(charCount) + msg.content.length
+    charCount = charCount.toString();
     let replaced = {
-      month: month,
-      characters: charCount.toString()
+      month: statsEntry,
+      characters: charCount
     }
-    await conn.table('stats').get(month).replace(replaced).run()
-    return await require("./commands/_translate.js").execute(Client, msg, args, command, conn)
+    await conn.table('stats').get(statsEntry).replace(replaced).run()
+
+    // :t [language] command //
+    return await require("./commands/_translate.js").execute(bot, msg, args, command, conn)
   }
+}) // msg handler end //
 
-})
-
+// Get upvotes from DBL //
 async function getUpvotes() {
   try {
     await dbl.getVotes(true, 7).then(votes => upvotes = votes );
@@ -194,6 +174,7 @@ async function getUpvotes() {
   }
 }
 
+// Get upvotes from upvotes array defined above //
 async function upvote(id) {
   let bool
   try {
@@ -208,13 +189,11 @@ async function upvote(id) {
   return bool
 }
 
-Client.connect()
-
-
+bot.connect() // Connect to Discord
 
 // Bot lists update every hour //
 setInterval(() => { return botLists.send(guildSize, shardSize) }, 1800000)
 
 // ERROR HANDLING //
-process.on("unhandledRejection", (reason)=>{ console.log("unhandledRejection\n" + reason.stack); return; })
-process.on("uncaughtException", (err)=>{ console.log("uncaughtException\n" + err.stack); return; })
+process.on("unhandledRejection", e => { console.log(`unhandledRejection\n${e.stack}`); return; })
+process.on("uncaughtException", e => { console.log(`uncaughtException\n${e.stack}`); return; })

@@ -8,6 +8,9 @@ module.exports = {
       let date = new Date()
       let month = date.getMonth() + 1;
       month = month.toString();
+      let year = date.getFullYear();
+      year = year.toString();
+      let statsEntry = `${month}/${year}`
       let servers = bot.guilds.size,
           mintime = ostb.uptime() / 60,
           uptime = Math.floor(mintime / 60),
@@ -20,7 +23,7 @@ module.exports = {
       })
 
       let charCount
-      conn.table('stats').get(month).run().then(entry => {
+      conn.table('stats').get(statsEntry).run().then(entry => {
         if(!entry) return
         charCount = entry.characters
       })

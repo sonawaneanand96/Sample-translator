@@ -1,11 +1,11 @@
 const config = require("./../tlcfg.json");
 module.exports = {
   command: "bug",
-  execute: async (Client, msg, args) => {
-    if(args[0] == undefined || args[0] == null || args[0] == "") return await Client.createMessage(msg.channel.id, `You need to type something first...`)
+  execute: async (bot, msg, args) => {
+    if(args[0] == undefined || args[0] == null || args[0] == "") return await bot.createMessage(msg.channel.id, `You need to type something first...`)
     if(args.length > 1024) return msg.channel.createMessage("Your bug report is too long.")
 
-    await Client.createMessage(config.bug_report_channel, { embed: {
+    await bot.createMessage(config.bug_report_channel, { embed: {
       color: 0xFFFFFF,
       author: { name: `${msg.author.username}#${msg.author.discriminator}`, icon_url: msg.author.avatarURL },
       footer: { text: msg.channel.guild.name, icon_url: msg.channel.guild.iconURL },

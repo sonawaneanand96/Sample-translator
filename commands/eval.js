@@ -2,7 +2,7 @@ const { inspect } = require("util")
 
 module.exports = {
   command: "eval",
-  execute: async (Client, msg, args) => {
+  execute: async (bot, msg, args, conn) => {
     let devs = ["205912295837138944", "286166184402092042"]
     let result
     let input = args.join(" ")

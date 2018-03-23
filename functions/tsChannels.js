@@ -7,6 +7,9 @@ module.exports = {
         let date = new Date()
         let month = date.getMonth() + 1;
         month = month.toString();
+        let year = date.getFullYear();
+        year = year.toString();
+        let statsEntry = `${month}/${year}`
         let tsChannels = []
         msg.channel.guild.channels.map(c => {
             if(c.name.startsWith("ts-")) tsChannels.push({name: c.name, id: c.id})
@@ -24,16 +27,16 @@ module.exports = {
               }
         }
         let charCount
-        await conn.table('stats').get(month).run().then(entry => {
+        await conn.table('stats').get(statsEntry).run().then(entry => {
           if(!entry) return
           charCount = entry.characters
         })
         charCount = parseInt(charCount) + msg.content.length
         let replaced = {
-          month: month,
+          month: statsEntry,
           characters: charCount.toString()
         }
-        await conn.table('stats').get(month).replace(replaced).run()
+        await conn.table('stats').get(statsEntry).replace(replaced).run()
         function tsChannelTranslate(lang, string, flag, sourceChannel, targetChannel) {
             if(string == "" || string == null || string == undefined) return;
             if(targetChannel !== sourceChannel) {

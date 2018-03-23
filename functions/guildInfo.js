@@ -1,9 +1,9 @@
 const config = require("./../tlcfg.json");
 module.exports = {
-  update:async (Client, guild, type) => {
+  update:async (bot, guild, type) => {
     let guildState = type ? "Joined New Guild" : "Left Guild"
-    Client.createMessage(config.guildStatChannel, { embed: {
-      color: 0xFFFFFF, description: `${guildState}, now at ${Client.guilds.size} guilds!`,
+    bot.createMessage(config.guildStatChannel, { embed: {
+      color: 0xFFFFFF, description: `${guildState}, now at ${bot.guilds.size} guilds!`,
       fields: [
         { name: "GuildID", value: guild.id },
         { name: "Owner", value: guild.ownerID, },
