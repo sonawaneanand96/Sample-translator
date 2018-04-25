@@ -1,7 +1,7 @@
 {
-    "token": "Insert Discord bot token here",
-    "prefix": "Insert your prefix here",
-    "owner": ["Insert your user ID in here"],
-    "playingStatus": "Insert your playing status here",
-    "tsChannelsEnabled": type true or false here, *without quotes* to tell the bot if you want to enable or disable tsChannels (automatic translation channels) Keeping them enabled allows you to use automatic translation channels, but at the same time may cause your bot to hit the ratelimit more often
+    "token": "",
+    "prefix": "",
+    "owner": [""],
+    "playingStatus": "",
+    "tsChannelsEnabled": 
 }
