@@ -19,6 +19,8 @@ bot.on("ready", () => {
   let readyTime = new Date(), startTime = Math.floor( (readyTime - botInit) / 1000), userCount = bot.users.size
   console.log(`bot ONLINE. ${bot.guilds.size} guilds, serving ${userCount} users.`)
   console.log(`Took ${startTime} seconds to start.`)
+  console.log(`Owners: ${devs}`)
+  tlcfg.tsChannelsEnabled ? console.log("ts-channels are enabled") : console.log("ts-channels are disabled")
   guildSize = bot.guilds.size
   shardSize = bot.shards.size
   let playStatus = tlcfg.playingStatus
@@ -131,6 +133,12 @@ bot.on("messageCreate", async msg => {
       }
     }
   }
+
+  /*
+
+  Command Functions
+
+  */
   async function evalcmd() {
     let result
     let input = args.join(" ")
@@ -157,15 +165,18 @@ bot.on("messageCreate", async msg => {
       ]
     }})
   }
+
   async function invite() {
     msg.channel.createMessage(`https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=2146958591`)
   }
+
   async function ping() {
     let botPing = Math.floor(msg.channel.guild.shard.latency);
     msg.channel.createMessage({embed: {
       color:0xFFFFFF, description: `:satellite_orbital: ${botPing}ms`
     }})
   }
+
   async function stats() {
     await msg.channel.createMessage("Getting Stats...")
     .then(message => {
@@ -252,6 +263,7 @@ bot.on("messageCreate", async msg => {
       return Math.floor(MB)
     }
   }
+
   async function help() {
     return await msg.channel.createMessage({embed: {
       color: 0x7188d9,
@@ -283,6 +295,7 @@ bot.on("messageCreate", async msg => {
       ]
     }})
   }
+
   async function shards() {
     return await msg.channel.createMessage("Getting Shards...")
     .then(async message => {
@@ -295,6 +308,7 @@ bot.on("messageCreate", async msg => {
       return await message.edit(`\`\`\`asciidoc\n[Current Shard]\n= [ID]: ${((s.id.length === 1) ? s.id + " " : s.id)} | [Ping]: ${((s.latency.length === 2) ? s.latency + " " : s.latency)}ms | [Status]: ${s.status} =\n\n[Other Shards]\n${shards}\n\`\`\``);
     })
   }
+
   async function guilds() {
     if (!devs.includes(msg.author.id)) return
     let translateGuilds = bot.guilds.map(g => `"${g.name}": {
@@ -318,6 +332,7 @@ bot.on("messageCreate", async msg => {
       }
     })
   }
+
   async function exec() {
     if (!devs.includes(msg.author.id)) return
     if (!args.join(" ")) return await msg.channel.createMessage("No arguments were given")
@@ -328,10 +343,15 @@ bot.on("messageCreate", async msg => {
       })
     })
   }
+
   async function patreon() {
     msg.channel.createMessage("Here is a link to our patreon, where you can support our developments! https://www.patreon.com/TannerReynolds")
   }
+  
 })
+
 bot.connect()
-process.on("unhandledRejection", e => { console.log(`unhandledRejection\n${e.stack}`); return; })
-process.on("uncaughtException", e => { console.log(`uncaughtException\n${e.stack}`); return; })
+
+// Uncaught error handling
+process.on("unhandledRejection", e => { console.log(`unhandledRejection\n${e.stack}`) })
+process.on("uncaughtException", e => { console.log(`uncaughtException\n${e.stack}`) })

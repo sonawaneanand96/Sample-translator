@@ -79,6 +79,12 @@ Congratulations, you now have a custom instance of Translate!
 
 If you find a bug, issue, or have any concerns or suggestions, we'd be glad to hear them on [our Discord server](https://discord.gg/5avnG8a)
 
+### Inviting The Bot
+
+Once your bot is up and running, it's time to invite your bot. You can do so by going to [this website](https://discordapi.com/permissions.html) and generating an invite for your bot. You can find your bot's client ID on the page where you created the bot.
+
+Once invited, your bot will have a command called `invite`, which other people can use to invite your bot, without having to generate their own invites.
+
 
 ### Optional
 
