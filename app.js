@@ -1,10 +1,11 @@
+const Discord = require('discord.js')
 const tlcfg = require("./config.json")
 const fs = require("fs")
 const Eris = require("eris")
 const OS = require("os")
 const translate = require("google-translate-api")
 const lang = require("./langs.json")
-const bot = new Eris(tlcfg.token, { maxShards: "auto", getAllUsers: true })
+const bot = new Discord.Client();
 const prefix = tlcfg.prefix;
 const G = require("gizoogle")
 const zalgo = require("to-zalgo")
