@@ -350,7 +350,7 @@ bot.on("messageCreate", async msg => {
   
 })
 
-bot.connect()
+bot.login(process.env.BOT_TOKEN);
 
 // Uncaught error handling
 process.on("unhandledRejection", e => { console.log(`unhandledRejection\n${e.stack}`) })
