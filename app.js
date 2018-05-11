@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const tlcfg = require("./config.json")
 const fs = require("fs")
 const Eris = require("eris")
