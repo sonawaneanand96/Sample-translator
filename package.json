@@ -4,8 +4,7 @@
   "description": "Translates messages to tons of different languages",
   "main": "app.js",
   "scripts": {
-    "prepare": "npm install",
-    "start": "node app.js"
+    "run": "node app.js"
   },
   "repository": {
     "type": "git",
