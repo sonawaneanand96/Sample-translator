@@ -5,7 +5,7 @@ const Eris = require("eris")
 const OS = require("os")
 const translate = require("google-translate-api")
 const lang = require("./langs.json")
-const bot = new Discord.Client();
+const bot = new Eris(process.env.BOT_TOKEN, { maxShards: "auto", getAllUsers: true })
 const prefix = tlcfg.prefix;
 const G = require("gizoogle")
 const zalgo = require("to-zalgo")
@@ -351,7 +351,7 @@ bot.on("messageCreate", async msg => {
   
 })
 
-bot.login(process.env.BOT_TOKEN);
+bot.connect();
 
 // Uncaught error handling
 process.on("unhandledRejection", e => { console.log(`unhandledRejection\n${e.stack}`) })
