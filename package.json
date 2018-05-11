@@ -4,7 +4,7 @@
   "description": "Translates messages to tons of different languages",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "run": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,6 @@
     "kpop": "^0.1.2",
     "os-toolbox": "^0.2.9",
     "to-zalgo": "^1.0.1"
-  }
+  },
+  "engines" : { "node" : ">=9.6.12" }
 }
