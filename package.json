@@ -4,6 +4,7 @@
   "description": "Translates messages to tons of different languages",
   "main": "app.js",
   "scripts": {
+    "postinstall": "npm install",
     "start": "node app.js"
   },
   "repository": {
