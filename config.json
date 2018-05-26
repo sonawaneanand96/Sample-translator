@@ -3,5 +3,6 @@
     "prefix": ":t",
     "owner": ["385389721024462848", "381647578015465475"],
     "playingStatus": ":t help",
-    "tsChannelsEnabled": true
+    "tsChannelsEnabled": true,
+    "rsChannelsEnabled": true
 }
