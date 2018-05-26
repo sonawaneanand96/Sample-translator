@@ -32,7 +32,7 @@ bot.on("ready", () => {
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
-  const rsChannelsEnabled = tlcfg.tsChannelsEnabled
+  const rsChannelsEnabled = tlcfg.rsChannelsEnabled
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toString().toLowerCase();
   if(tsChannelsEnabled) tsChannels()
