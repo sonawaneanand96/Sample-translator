@@ -32,9 +32,11 @@ bot.on("ready", () => {
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
+  const rsChannelsEnabled = tlcfg.tsChannelsEnabled
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toString().toLowerCase();
   if(tsChannelsEnabled) tsChannels()
+  if(rsChannelsEnabled) rsChannels()
   if(msg.content.toLowerCase().indexOf(prefix) !== 0) return;
   if(command.toLowerCase() === "help") return help()
   if(command.toLowerCase() === "eval") return evalcmd()
@@ -108,6 +110,41 @@ bot.on("messageCreate", async msg => {
     })
     for(i = 0; i < tsChannels.length; i++) {
       let channelLangReg = /(?<=ts\-)\S+/i;
+      let channelLang = channelLangReg.exec(tsChannels[i].topic.toLowerCase());
+      channelLang = channelLang[channelLang.length - 1]
+      for (let l in langs) {
+        for (let a in langs[l].alias) {
+          if(langs[l].alias[a] === channelLang) {
+            tsChannelTranslate(l, msg.content, `:flag_${langs[l].flag}:`, msg.channel.id, tsChannels[i].id)
+          }
+        }
+      }
+    }
+    function tsChannelTranslate(lang, string, flag, sourceChannel, targetChannel) {
+      if(string == "" || string == null || string == undefined) return;
+      if(targetChannel !== sourceChannel) {
+        translate(string, { to: lang }).then(res => {
+          if (res.text.length > 200) {
+            bot.createMessage(targetChannel, `**${msg.author.username}#${msg.author.discriminator}**: ${res.text}`);
+          } else {
+            bot.createMessage(targetChannel, { embed: {
+              color: 0xFFFFFF, description: `${flag} ${res.text}`, author: {name: `${msg.author.username}#${msg.author.discriminator}`, icon_url: msg.author.avatarURL ? msg.author.avatarURL : msg.author.defaultAvatarURL}
+            }});
+          }
+        }).catch(err => console.error(err) );
+      }
+    }
+    async function rsChannels() {
+    if(!msg.channel.topic) return
+    if(!msg.channel.topic.toLowerCase().startsWith("rs-")) return
+    let tsChannels = []
+    msg.channel.guild.channels.map(c => {
+      if(c.topic) {
+        if(c.topic.toLowerCase().startsWith("rs-")) tsChannels.push({topic: c.topic, id: c.id})
+      }
+    })
+    for(i = 0; i < tsChannels.length; i++) {
+      let channelLangReg = /(?<=rs\-)\S+/i;
       let channelLang = channelLangReg.exec(tsChannels[i].topic.toLowerCase());
       channelLang = channelLang[channelLang.length - 1]
       for (let l in langs) {
