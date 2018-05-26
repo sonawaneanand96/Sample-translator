@@ -134,6 +134,7 @@ bot.on("messageCreate", async msg => {
         }).catch(err => console.error(err) );
       }
     }
+  }
     async function rsChannels() {
     if(!msg.channel.topic) return
     if(!msg.channel.topic.toLowerCase().startsWith("rs-")) return
