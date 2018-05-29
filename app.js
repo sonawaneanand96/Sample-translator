@@ -351,8 +351,7 @@ bot.on("messageCreate", async msg => {
     if (!devs.includes(msg.author.id)) return
     let translateGuilds = bot.guilds.map(g => `"${g.name}": {
         "MEMBER COUNT": "${g.memberCount}",
-        "GUILD ID": "${g.id}",
-        "MEMBER": "${g.members{}}",
+        "GUILD ID": "${g.id}"
         "OWNER ID": "${g.ownerID}",
         "LARGE GUILD": "${g.large}",
         "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
