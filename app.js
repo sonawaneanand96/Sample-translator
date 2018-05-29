@@ -317,18 +317,6 @@ bot.on("messageCreate", async msg => {
         {
           name: "Finding out what language people are speaking in",
           value: "If you see people chatting away in a language you dont know, and you want to take part in the conversaion, you can type **\":t lang (text to analyze)\"** and Translate will dissect the message and tell you what language they\"re speaking in! For example, All I\"d have to type is **\":t lang 안녕하세요, 만나서 반가워요!\"** to find out that they\"re speaking in korean"
-        },
-        {
-          name: "Translating Messages Automatically",
-          value: "We support automatic translations! To set up a channel to allow automatic translations between two languages, simply make a channel with a topic saying `ts-[LANGUAGE]` and another channel with a topic saying `ts-[OTHER LANGUAGE]`. For example, if I want to have channels where i can automatically translate messages from one language to another, I can make two channels, one with the topic `ts-english`, and another with the topic `ts-spanish` so that we can speak to each other quickly and easily!"
-        },
-        {
-          name: "Other commands available",
-          value: "```ini\n[patreon] Sends a link to our patreon so you can support development!\n\n[invite] Sends an invite link so that your friends can invite Translate to their servers too\n\n[:t stats] Shows some cool technical statistic nerd-stuff about the bot\n\n[:t shards] Displays all the bot\"s shards, along with their pings\n```"
-        },
-        {
-          name: "More Information",
-          value: "Want to host an instance of translate? Support our development? Report bugs and suggest new features or changes? Join our Discord server! https://discord.gg/5avnG8a"
         }
       ]
     }})
