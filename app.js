@@ -85,7 +85,8 @@ bot.on("messageCreate", async msg => {
     }
     function translateFunction(lang, string, flag){
       if(string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to translate!");
-      translate(string, { to: lang }).then((res)=>{
+      if(string.startsWith("http://") || string.startsWith("https://")) return;
+       translate(string, { to: lang }).then((res)=>{
         res.text = translateFix(res.text);
         if (res.text.length > 200) {
           return msg.channel.createMessage(`${flag}\n${res.text}`);
@@ -136,6 +137,10 @@ bot.on("messageCreate", async msg => {
       if(targetChannel !== sourceChannel) {
         translate(string, { to: lang }).then(res => {
           res.text = translateFix(res.text);
+           if(string.startsWith("http://") || string.startsWith("https://")){
+      	bot.createMessage(targetChannel, `**${msg.author.username}#${msg.author.discriminator}**: ${string}`)
+      	return;
+      	}
           if (res.text.length > 200) {
             bot.createMessage(targetChannel, `**${msg.author.username}#${msg.author.discriminator}**: ${res.text}`);
           } else {
@@ -172,7 +177,12 @@ bot.on("messageCreate", async msg => {
       if(string == "" || string == null || string == undefined) return;
       if(targetChannel !== sourceChannel) {
         translate(string, { to: lang }).then(res => {
-          if (res.text.length > 200) {
+          res.text = translateFix(res.text);
+           if(string.startsWith("http://") || string.startsWith("https://")){
+      	bot.createMessage(targetChannel, `**${msg.author.username}#${msg.author.discriminator}**: ${string}`)
+      	return;
+      	}
+         if (res.text.length > 200) {
             bot.createMessage(targetChannel, `**${msg.author.username}#${msg.author.discriminator}**: ${res.text}`);
           } else {
             bot.createMessage(targetChannel, { embed: {
