@@ -14,6 +14,16 @@ const japanese = require("japanese")
 const devs = tlcfg.owner
 const ostb = require("os-toolbox");
 const langs = require("./langmap.json")
+const translateFix = function(string)
+{
+   const normal = /(<[@#!$%&*])\s*/gim;
+   const nick = /(<[@#!$%&*]!)\s*/gim;
+   const role = /(<[@#!$%&*]&)\s*/gim;
+
+   return string.replace(normal, "$1")
+      .replace(nick, "$1")
+      .replace(role, "$1");
+};
 let guildSize = null, shardSize = null, botInit = new Date();
 bot.on("ready", () => {
   let readyTime = new Date(), startTime = Math.floor( (readyTime - botInit) / 1000), userCount = bot.users.size
@@ -76,6 +86,7 @@ bot.on("messageCreate", async msg => {
     function translateFunction(lang, string, flag){
       if(string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to translate!");
       translate(string, { to: lang }).then((res)=>{
+        res.text = translateFix(res.text);
         if (res.text.length > 200) {
           return msg.channel.createMessage(`${flag}\n${res.text}`);
         }
@@ -124,6 +135,7 @@ bot.on("messageCreate", async msg => {
       if(string == "" || string == null || string == undefined) return;
       if(targetChannel !== sourceChannel) {
         translate(string, { to: lang }).then(res => {
+          res.text = translateFix(res.text);
           if (res.text.length > 200) {
             bot.createMessage(targetChannel, `**${msg.author.username}#${msg.author.discriminator}**: ${res.text}`);
           } else {
