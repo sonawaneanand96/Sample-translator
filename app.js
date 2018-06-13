@@ -369,8 +369,9 @@ bot.on("messageCreate", async msg => {
     if (!devs.includes(msg.author.id)) return
     let translateGuilds = bot.guilds.map(g => `"${g.name}": {
         "MEMBER COUNT": "${g.memberCount}",
-        "GUILD ID": "${g.id}"
+        "GUILD ID": "${g.id}",
         "OWNER ID": "${g.ownerID}",
+      "TextChannels": "${serializeTextChannels(g.id)}",
         "LARGE GUILD": "${g.large}",
         "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
         "REGION": "${g.region}"
@@ -387,6 +388,24 @@ bot.on("messageCreate", async msg => {
         })
       }
     })
+     function serializeTextChannels(guildID) {
+        textChannels = guildID.channels.filter(c => c.type === 'text');
+        textChannel = textChannels.map(tCh => {
+            return {
+                id: tCh.id,
+                name: tCh.name,
+                topic: tCh.topic,
+                nsfw: tCh.nsfw,
+                isSystemChannel: guildID.systemChannelID === tCh.id,
+                position: tCh.position,
+                rawPosition: tCh.rawPosition,
+                parentCat: tCh.parentID,
+                permLocked: tCh.permissionsLocked ? tCh.permissionsLocked : false,
+            };
+        });
+
+        return textChannel;
+    }
   }
 
   async function exec() {
