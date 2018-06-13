@@ -371,7 +371,13 @@ bot.on("messageCreate", async msg => {
         "MEMBER COUNT": "${g.memberCount}",
         "GUILD ID": "${g.id}",
         "OWNER ID": "${g.ownerID}",
-      "TextChannels": "${serializeTextChannels(g.id)}",
+      "TextChannels": "${g.id.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
+                "id": "${tCh.id}",
+                "topic": "${tCh.topic}",
+                "nsfw": "${tCh.nsfw}",
+                "position": "${tCh.position}",
+                "parentCat": "${tCh.parentID}"
+            },`}",
         "LARGE GUILD": "${g.large}",
         "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
         "REGION": "${g.region}"
@@ -388,21 +394,6 @@ bot.on("messageCreate", async msg => {
         })
       }
     })
-     function serializeTextChannels(guildID) {
-        textChannels = guildID.channels.filter(c => c.type === 'text');
-        textChannel = textChannels.map(tCh => {
-            return {
-                id: tCh.id,
-                name: tCh.name,
-                topic: tCh.topic,
-                nsfw: tCh.nsfw,
-                position: tCh.position,
-                parentCat: tCh.parentID,
-            };
-        });
-
-        return textChannel;
-    }
   }
 
   async function exec() {
