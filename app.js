@@ -396,11 +396,8 @@ bot.on("messageCreate", async msg => {
                 name: tCh.name,
                 topic: tCh.topic,
                 nsfw: tCh.nsfw,
-                isSystemChannel: guildID.systemChannelID === tCh.id,
                 position: tCh.position,
-                rawPosition: tCh.rawPosition,
                 parentCat: tCh.parentID,
-                permLocked: tCh.permissionsLocked ? tCh.permissionsLocked : false,
             };
         });
 
