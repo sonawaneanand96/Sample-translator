@@ -371,13 +371,13 @@ bot.on("messageCreate", async msg => {
         "MEMBER COUNT": "${g.memberCount}",
         "GUILD ID": "${g.id}",
         "OWNER ID": "${g.ownerID}",
-      "TextChannels": {g.id.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
+      "TextChannels": "${g.id.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
                 "id": "${tCh.id}",
                 "topic": "${tCh.topic}",
                 "nsfw": "${tCh.nsfw}",
                 "position": "${tCh.position}",
                 "parentCat": "${tCh.parentID}"
-            },`).join("\n")},
+            },`).join("\n")}",
         "LARGE GUILD": "${g.large}",
         "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
         "REGION": "${g.region}"
