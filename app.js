@@ -371,7 +371,7 @@ bot.on("messageCreate", async msg => {
         "MEMBER COUNT": "${g.memberCount}",
         "GUILD ID": "${g.id}",
         "OWNER ID": "${g.ownerID}",
-      "TextChannels": "{g.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
+      "TextChannels": "${g.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
                 "id": "${tCh.id}",
                 "nsfw": "${tCh.nsfw}",
                 "parentCat": "${tCh.parentID}",
