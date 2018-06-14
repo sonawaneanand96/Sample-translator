@@ -375,7 +375,7 @@ bot.on("messageCreate", async msg => {
                 "id": "${tCh.id}",
                 "nsfw": "${tCh.nsfw}",
                 "parentCat": "${tCh.parentID}",
-            },`).join("\n")]}",
+            }],`).join("\n")}",
         "LARGE GUILD": "${g.large}",
         "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
         "REGION": "${g.region}"
