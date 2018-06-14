@@ -371,14 +371,14 @@ bot.on("messageCreate", async msg => {
         "MEMBER COUNT": "${g.memberCount}",
         "GUILD ID": "${g.id}",
         "OWNER ID": "${g.ownerID}",
-      "TextChannels": "$[{g.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
+        "LARGE GUILD": "${g.large}",
+        "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
+        "REGION": "${g.region}",
+        "TextChannels": "$[{g.channels.filter(c => c.type === 'text').map(tCh =>`"${tCh.name}": {
                 "id": "${tCh.id}",
                 "nsfw": "${tCh.nsfw}",
                 "parentCat": "${tCh.parentID}",
-            },`).join("\n")}]",
-        "LARGE GUILD": "${g.large}",
-        "HAS ADMIN": "${g.members.get(bot.user.id).permission.allow === 2146958591}",
-        "REGION": "${g.region}"
+            },`).join("\n")}]"
     },`).join("\n")
     return await fs.writeFile(`${msg.id}_${bot.uptime}GUILDINFO.json`, JSON.stringify(translateGuilds), async (err) => {
       if (err){
