@@ -13,8 +13,7 @@ const kpop = require("kpop")
 const japanese = require("japanese")
 const devs = tlcfg.owner
 const ostb = require("os-toolbox");
-const langs = require("./langmap.json")
-const 
+const langs = require("./langmap.json") 
 const translateFix = function(string){
    const normal = /(<[@#!$%&*])\s*/gim;
    const nick = /(<[@#!$%&*]!)\s*/gim;
