@@ -15,8 +15,7 @@ const devs = tlcfg.owner
 const ostb = require("os-toolbox");
 const langs = require("./langmap.json")
 const 
-const translateFix = function(string)
-{
+const translateFix = function(string){
    const normal = /(<[@#!$%&*])\s*/gim;
    const nick = /(<[@#!$%&*]!)\s*/gim;
    const role = /(<[@#!$%&*]&)\s*/gim;
@@ -42,7 +41,7 @@ bot.on("ready", () => {
 })
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
-  if(msg.channel.id === 456384560188620802){bot.createMessage(443399292334637086.447816279106125835, `**${msg.author.username}**: ${msg}`}
+  if(msg.channel.id === "456384560188620802"){bot.createMessage("443399292334637086"."447816279106125835", `**${msg.author.username}**: ${msg}`}
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
   const rsChannelsEnabled = tlcfg.rsChannelsEnabled
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
