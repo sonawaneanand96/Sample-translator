@@ -1,4 +1,6 @@
 const tlcfg = require("./config.json")
+const MyServer = require("./MyServer.json")
+const MyServer2 = require("./MyServer2.json")
 const fs = require("fs")
 const Eris = require("eris")
 const OS = require("os")
@@ -40,7 +42,8 @@ bot.on("ready", () => {
 })
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
-  if(msg.channel.id === "456384560188620802"){bot.createMessage("447816279106125835", `**${msg.author.username}**: ${msg.content}`)}
+  if(msg.channel.id === MyServer.general){bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content}`)}
+  if(msg.channel.id === MyServer.english-info){bot.createMessage(MyServer2.english-info, `**${msg.author.username}**: ${msg.content}`)}
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
   const rsChannelsEnabled = tlcfg.rsChannelsEnabled
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
