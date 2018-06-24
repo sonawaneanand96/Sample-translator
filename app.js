@@ -43,7 +43,7 @@ bot.on("ready", () => {
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
   if(msg.channel.guild.id === MyServer.guild){
-     if(msg.channel.id === MyServer.general && !msg.attachments[0].id){
+     if(msg.channel.id === MyServer.general && msg.attachments[0].id === null){
         bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content}`)}
      else{bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content} ${msg.attachments[0].url}`)}
   }
