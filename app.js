@@ -43,7 +43,7 @@ bot.on("ready", () => {
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
   if(msg.channel.guild.id === MyServer.guild){
-     if(msg.channel.id === MyServer.general){bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content} ${msg.attachments.url}`)}
+     if(msg.channel.id === MyServer.general){bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content} ${msg.attachments[0].url}`)}
      if(msg.channel.id === MyServer.englishinfo){bot.createMessage(MyServer2.englishinfo, `**${msg.author.username}**: ${msg.content} ${msg.attachments[0]}`)}
   }
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
