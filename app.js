@@ -45,7 +45,7 @@ bot.on("messageCreate", async msg => {
   if(msg.channel.guild.id === MyServer.guild){
      if(msg.channel.id === MyServer.general){
         var site ="";
-        if(msg.attachments[0].url is not null){site = msg.attachments[0].url}
+        if(msg.attachments[0]){site = msg.attachments[0].url}
         bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content} {site}`)}
   }
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
