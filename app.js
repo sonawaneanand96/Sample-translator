@@ -42,7 +42,7 @@ bot.on("ready", () => {
 })
 bot.on("messageCreate", async msg => {
   if(msg.author.bot) return
-  if(msg.channel.guild === "443399292334637086"){
+  if(msg.channel.guild === MyServer.guild){
      if(msg.channel.id === MyServer.general){bot.createMessage(MyServer2.general, `**${msg.author.username}**: ${msg.content}`)}
      if(msg.channel.id === MyServer.englishinfo){bot.createMessage(MyServer2.englishinfo, `**${msg.author.username}**: ${msg.content}`)}
   }
