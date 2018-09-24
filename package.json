@@ -2,9 +2,9 @@
   "name": "translate-bot",
   "version": "4.0.0",
   "description": "Translates messages to tons of different languages",
-  "main": "app.js",
+  "main": "node app.js",
   "scripts": {
-    "run": "node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -29,5 +29,5 @@
     "os-toolbox": "^0.2.9",
     "to-zalgo": "^1.0.1"
   },
-  "engines" : { "node" : ">=9.6.12" }
+  "engines" : { "node" : ">=8.4.0" }
 }
